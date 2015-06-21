@@ -13,3 +13,14 @@
 ************************************************************************/
 
 #include "chess.h"
+
+/*********************************************
+ * OUT << PIECE
+ * Insertion operator for the piece
+ ********************************************/
+ostream & operator << (ostream & out, const Piece & rhs)
+{
+   out << rhs.getLetter();
+   return out;
+}
+
