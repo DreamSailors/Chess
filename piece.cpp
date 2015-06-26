@@ -12,7 +12,7 @@
 *      Please describe briefly what was the most difficult part.
 ************************************************************************/
 
-#include "chess.h"
+#include "piece.h"
 
 /*********************************************
  * OUT << PIECE

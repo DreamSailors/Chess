@@ -14,7 +14,7 @@
 
 #include <cstdlib>
 #include <iostream>    // for CIN and COUT
-#include "chess.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -59,9 +59,11 @@ int main()
    board[7][6] = new Knight(false /*black*/);
    board[7][7] = new Rook  (false /*black*/);
 
+   cout << "   abcdefgh\n";
    // display the board
    for (int row = 7; row >= 0; row--)
    {
+      cout << " " << row+1 << " ";
       for (int col = 0; col < 8; col++)
          cout << *board[row][col];
       cout << endl;
