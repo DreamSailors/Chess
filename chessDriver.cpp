@@ -24,7 +24,8 @@ using namespace std;
  ***********************************************************************/
 int main()
 {
-   // make an array of pieces
+	cout << "sam" << endl;
+	// make an array of pieces
    Piece * board[8][8];
 
    // the white army
