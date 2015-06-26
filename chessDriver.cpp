@@ -24,6 +24,7 @@ using namespace std;
  ***********************************************************************/
 int main()
 {
+	cout << "Sam's Copy" << endl;
    // make an array of pieces
    Piece * board[8][8];
 
