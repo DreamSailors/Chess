@@ -26,8 +26,3 @@
 *.exe
 *.out
 *.app
-
-#VisualStudio files
-*.vcxproj
-*.vcxproj.filters
-*.cd
