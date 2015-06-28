@@ -79,7 +79,7 @@ void Board::display()
    }
    else
    {
-      cout << "Fancy stuff here";
+      cout << "Fancy stuff output here";
    }
 }
 

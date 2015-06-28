@@ -22,6 +22,14 @@
 
 using namespace std;
 
+#define WHITE_WHITE "\E[31;47m" // white square white piece
+#define WHITE_BLACK "\E[30;47m" // white square black piece
+#define BLACK_WHITE "\E[37;41m" // black square white piece
+#define BLACK_BLACK "\E[30;41m" // black square black piece
+#define RETURN      "\E[0m"     // setback to normal colors
+
+
+
 /*****************************************
  * PIECE
  * The base piece class.  
