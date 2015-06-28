@@ -24,8 +24,8 @@
 #	tar -cf project3.tar *.cpp *.h makefile
 	
 
- chess : piece.o position.o move.o chess.o 
-	g++ -o chess piece.o position.o move.o chess.o
+ chess : piece.o position.o move.o board.o chess.o 
+	g++ -o chess piece.o position.o move.o board.o chess.o
 
 
 
@@ -41,14 +41,19 @@
 chess.o : chess.cpp piece.h
 	g++ -c chess.cpp
 	
+board.o : board.cpp board.h
+	g++ -c board.cpp
+	
+piece.o : piece.cpp piece.h
+	g++ -c piece.cpp
+
 move.o : move.cpp move.h
 	g++ -c move.cpp
 
 postion.o : position.cpp position.h
 	g++ -c position.cpp
 
-piece.o : piece.cpp piece.h
-	g++ -c piece.cpp
+
 
 
 

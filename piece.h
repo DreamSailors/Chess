@@ -27,7 +27,7 @@ using namespace std;
  * The base piece class.  
  * 
  *****************************************/
-class Piece : Move
+class Piece 
 {
 public:
    Piece(bool isWhite) : isWhite(isWhite) {                 }
