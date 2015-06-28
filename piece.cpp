@@ -14,6 +14,7 @@
 
 #include "piece.h"
 
+
 /*********************************************
  * OUT << PIECE
  * Insertion operator for the piece

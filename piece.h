@@ -18,23 +18,35 @@
 
 #include <iostream>
 #include <cassert>
+#include "move.h"
 
 using namespace std;
 
 /*****************************************
  * PIECE
-
+ * The base piece class.  
+ * 
  *****************************************/
-class Piece
+class Piece : Move
 {
 public:
    Piece(bool isWhite) : isWhite(isWhite) {                 }
+   virtual ~Piece() { }
    bool getIsWhite() const                { return isWhite; }
-   virtual char getLetter() const         { return ' ';     }
-   virtual int getScore() const           { return 0;  }
+   virtual char getLetter() const  = 0;
+   virtual int getScore() const = 0;
    friend ostream & operator << (ostream & out, const Piece & rhs);
 protected:
    bool isWhite;
+};
+
+class Space : public Piece
+{
+public:
+   Space() : Piece(false)   {                    }
+   virtual int getScore() const    { return 0;}
+   virtual char getLetter() const  { return PIECE_EMPTY;}
+   
 };
 
 class King : public Piece

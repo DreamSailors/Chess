@@ -24,8 +24,8 @@
 #	tar -cf project3.tar *.cpp *.h makefile
 	
 
- chess : piece.o position.o move.o chessdriver.o 
-	g++ -o chess piece.o position.o move.o chessdriver.o
+ chess : piece.o position.o move.o chess.o 
+	g++ -o chess piece.o position.o move.o chess.o
 
 
 
@@ -38,8 +38,8 @@
 #    pong.o        Only the greatest game ever! (and it was for 20 years)  
 ###############################################################
 
-chessdriver.o : chessdriver.cpp piece.h
-	g++ -c chessdriver.cpp
+chess.o : chess.cpp piece.h
+	g++ -c chess.cpp
 	
 move.o : move.cpp move.h
 	g++ -c move.cpp

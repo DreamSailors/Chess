@@ -47,7 +47,7 @@ int main()
    // the spaces
    for (int row = 2; row < 6; row++)
       for (int col = 0; col < 8; col++)
-         board[row][col] = new Piece(true);
+         board[row][col] = new Space();
    
    // the black army
    board[7][0] = new Rook  (false /*black*/);
