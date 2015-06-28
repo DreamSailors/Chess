@@ -31,3 +31,4 @@
 *.vcxproj
 *.vcxproj.filters
 *.cd
+/chess
