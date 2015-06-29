@@ -12,15 +12,32 @@
 *      Please describe briefly what was the most difficult part.
 ************************************************************************/
 
-#include "chess.h"
+#include <cstdlib>
+#include <iostream>    // for CIN and COUT
+#include "piece.h"
+#include "board.h"
 
-/*********************************************
- * OUT << PIECE
- * Insertion operator for the piece
- ********************************************/
-ostream & operator << (ostream & out, const Piece & rhs)
+using namespace std;
+
+/**********************************************************************
+ * MAIN: This is a driver program for our various piece classes.
+ *       You are not allowed to change MAIN in any way
+ ***********************************************************************/
+int main()
 {
-   out << rhs.getLetter();
-   return out;
+   Board board;
+   
+   cout << board << endl << "pompt:";
+   
+  // board.setup();   // Setup the new board
+   
+  // board.setTest(true);   //temp test setup
+  // board.display();  //display the content
+  
+   
+
+
+   return 0;
 }
+
 

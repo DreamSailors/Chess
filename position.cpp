@@ -73,8 +73,8 @@ const Position & Position::operator = (const char * rhs) throw ( string )
  ******************************************/
 ostream & operator << (ostream & out, const Position & rhs)
 {
-   out << (char)(rhs.getCol() + 'a')
-       << (char)(rhs.getRow() + '1');
+	out << (char)(rhs.getCol() + 'a')
+		<< (char)(rhs.getRow() + '1');
 
    return out;
 }
