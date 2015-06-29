@@ -19,7 +19,12 @@ public:
     void setTest(bool test) {isTest = test;}
     bool getTest() const { return isTest; }
     void setup();
-    void display();
+    void display() const;
+    
+    Piece & operator [] (const Position & pos)
+    {return *board[pos.getCol()][pos.getRow()];};
+    
+    friend ostream & operator << (ostream & out, const Board & rhs);
     
 private:
     bool isTest;

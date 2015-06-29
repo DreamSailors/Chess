@@ -27,10 +27,12 @@ int main()
 {
    Board board;
    
-   board.setup();   // Setup the new board
+   cout << board << endl << "pompt:";
    
-   board.setTest(true);   //temp test setup
-   board.display();  //display the content
+  // board.setup();   // Setup the new board
+   
+  // board.setTest(true);   //temp test setup
+  // board.display();  //display the content
   
    
 
