@@ -18,8 +18,8 @@ using namespace std;
 // Two statics in the Piece class: the simple flag indicating that we
 //    have the Test board displayed instead of the colorful board, and
 //    the currentMove so each piece can tell if it's move was the last move
-bool Piece::fSimple = false;   // not starting off in Test mode
-int  Piece::currentMove = 0;   // starting at move 0
+//bool Piece::fSimple = false;   // not starting off in Test mode
+//int  Piece::currentMove = 0;   // starting at move 0
 
 /*************************************
  * main
@@ -51,7 +51,7 @@ int main()
    cout << "pawn:   " << pawn << endl;
 
    // space
-   Space space(0, 6);
+   Space space(0, 6, true /*all blanks are black*/);
    cout << "space:  " << space << endl;
    
    // make a list of pieces

@@ -42,7 +42,7 @@ public:
    Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row,col) {  }
    virtual ~Piece() { }
    bool getIsWhite() const                { return isWhite; }
-   virtual char getLetter() const  = 0;
+   virtual char getLetter() const = 0;
    virtual int getScore() const = 0;
    friend ostream & operator << (ostream & out, const Piece & rhs);
    

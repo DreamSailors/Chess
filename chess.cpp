@@ -27,9 +27,9 @@ int main()
 {
    Board board;
    
-   cout << board << endl << "pompt:";
+   cout << board << endl << "prompt:";
    
-  // board.setup();   // Setup the new board
+   board.setup();   // Setup the new board
    
   // board.setTest(true);   //temp test setup
   // board.display();  //display the content
