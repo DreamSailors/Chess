@@ -27,7 +27,10 @@ int main()
 {
    Board board;
    
-   cout << board << endl << "pompt:";
+   //cout << "-start->" << board << "<-end-" << endl << "pompt:";
+   cout << board << "prompt:" << endl;
+   
+
    
   // board.setup();   // Setup the new board
    
