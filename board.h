@@ -20,8 +20,8 @@ public:
     void setTest(bool test) {isTest = test;}
     bool getTest() const { return isTest; }
  
-//    Piece & operator [] (const Position & pos)
-//    {return *board[pos.getCol()][pos.getRow()];};
+    Piece & operator [] (const Position & pos)
+    {return *board[pos.getRow()][pos.getCol()];};
     
     friend ostream & operator << (ostream & out, const Board & rhs);
     
