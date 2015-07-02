@@ -23,11 +23,11 @@
 
 using namespace std;
 
-#define WHITE_WHITE "\E[31;47m" // white square white piece
-#define WHITE_BLACK "\E[30;47m" // white square black piece
-#define BLACK_WHITE "\E[37;41m" // black square white piece
-#define BLACK_BLACK "\E[30;41m" // black square black piece
-#define RETURN      "\E[0m"     // setback to normal colors
+#define WHITE_WHITE "\E[31;47m " // white square white piece
+#define WHITE_BLACK "\E[30;47m " // white square black piece
+#define BLACK_WHITE "\E[37;41m " // black square white piece
+#define BLACK_BLACK "\E[30;41m " // black square black piece
+#define NONE        " \E[0m"     // setback to normal colors
 
 
 
@@ -44,7 +44,10 @@ public:
    bool getIsWhite() const                { return isWhite; }
    virtual char getLetter() const  = 0;
    virtual int getScore() const = 0;
+//   virtual char getLetter() const { return 0; }
+ //  virtual int getScore() const = 0;		+   virtual int getScore() const { return PIECE_EMPTY; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
+   Position getPos()         { return this->position; }
    
 protected:
     Position position;
@@ -122,5 +125,5 @@ class Bishop : public Piece
 };
 
 
-#endif	/* CHESS_H */
+#endif	/* PIECE.H */
 

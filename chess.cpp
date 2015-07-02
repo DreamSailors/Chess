@@ -16,6 +16,7 @@
 #include <iostream>    // for CIN and COUT
 #include "piece.h"
 #include "board.h"
+#include "menu.h"
 
 using namespace std;
 
@@ -26,8 +27,15 @@ using namespace std;
 int main()
 {
    Board board;
+   Menu menu;
    
-   cout << board << endl << "pompt:";
+   cout << board;
+   cout << menu;
+//   menu.getUserInput();
+//   menu.displayMenu();
+   
+   
+
    
   // board.setup();   // Setup the new board
    
