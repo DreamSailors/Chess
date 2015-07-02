@@ -97,6 +97,13 @@ void Board::display() const
 }
 
 
+void Board::makeMove(const Position & pos, Piece & piece)
+{
+	board[pos.getRow()][pos.getCol()] =  &piece;
+
+}
+
+
  ostream & operator << (ostream & out, const Board & rhs)
  {
     
