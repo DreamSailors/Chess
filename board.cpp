@@ -103,39 +103,40 @@ void Board::displayText() const
 void Board::displayFancy() const
 {
    cout << "    a  b  c  d  e  f  g  h \n";   //header
-      // display the board
-      for (int row = 7; row >= 0; row--)
+   // display the board
+   for (int row = 7; row >= 0; row--)
+   {
+      cout << " " << row+1 << " ";
+      for (int col = 0; col < 8; col++)
       {
-         cout << " " << row+1 << " ";
-         for (int col = 0; col < 8; col++)
-         {
-            Piece * piece = board[row][col];   //get current piece
-            
-            char id = piece->getLetter();     //do letter manipulation
-            if (id == 'P')                //change pawns to lowercase
-               id = 'p';
-            
-            //CHange white pieces to uppercase except for pawns
-            if(piece->getIsWhite() && (piece->getLetter() != 'p'))
-               id = toupper(piece->getLetter());
-                 
-            
-            if(((row % 2 == 0) && (col%2 == 0)) || ((row % 2 == 1) && (col%2 == 1)))
-               //redsquare
-               if(board[row][col]->getIsWhite())  // White piece
-                  cout << BLACK_WHITE << id << NONE; 
-               else
-                  cout << BLACK_BLACK  << id << NONE; 
+         Piece * piece = board[row][col];   //get current piece
+
+         char id = piece->getLetter();     //do letter manipulation
+         if (id == 'P')                //change pawns to lowercase
+            id = 'p';
+
+         //CHange white pieces to uppercase except for pawns
+         if(piece->getIsWhite() && (piece->getLetter() != 'p'))
+            id = toupper(piece->getLetter());
+
+
+         if(((row % 2 == 0) && (col%2 == 0)) || ((row % 2 == 1) && (col%2 == 1)))
+            //redsquare
+            if(board[row][col]->getIsWhite())  // White piece
+               cout << BLACK_WHITE << id << NONE; 
             else
-              //Whitesquare
-               if(board[row][col]->getIsWhite())  // White piece
-                  cout << WHITE_WHITE << id << NONE;
-               else
-                  cout <<  WHITE_BLACK  << id <<  NONE;
-      
-         }
-         cout << endl;
+               cout << BLACK_BLACK  << id << NONE; 
+         else
+           //Whitesquare
+            if(board[row][col]->getIsWhite())  // White piece
+               cout << WHITE_WHITE << id << NONE;
+            else
+               cout <<  WHITE_BLACK  << id <<  NONE;
+
       }
+      cout << " " << row+1 << endl;
+   }
+    cout << "    a  b  c  d  e  f  g  h \n";   // footer
    
 }
 
