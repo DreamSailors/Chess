@@ -65,6 +65,7 @@ const Position & Position::operator = (const char * rhs) throw ( string )
    setCol(rhs[0] - 'a');
    setRow(rhs[1] - '1');
 
+
    return *this;
 }
 

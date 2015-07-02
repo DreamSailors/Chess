@@ -42,15 +42,20 @@ public:
    Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row,col) {  }
    virtual ~Piece() { }
    bool getIsWhite() const                { return isWhite; }
-   virtual char getLetter() const = 0;
-   virtual int getScore() const = 0;
+   virtual char getLetter() const { return 0; }
+   virtual int getScore() const { return PIECE_EMPTY; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
-   
+   Position getPos()         { return this->position; }
 protected:
     Position position;
     bool isWhite;
 };
 
+/*****************************************
+* SPACE
+* The SPACE class.
+*
+*****************************************/
 class Space : public Piece
 {
 public:
@@ -122,5 +127,5 @@ class Bishop : public Piece
 };
 
 
-#endif	/* CHESS_H */
+#endif	/* PIECE_H */
 

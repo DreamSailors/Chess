@@ -21,7 +21,7 @@
  ********************************************/
 ostream & operator << (ostream & out, const Piece & rhs)
 {
-   out << rhs.getLetter();
+	out << rhs.getLetter();
    return out;
 }
 

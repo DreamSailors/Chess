@@ -24,15 +24,15 @@ int main()
    string input;
    Move move2;
    Board board;
-   Position source;
-   //Piece sourcePiece;
+
 
    board.setup();   // Setup the new board
-   board.display(); //display board
-
+   board.setTest(true);
    
+
    for (;;)
    {
+	   board.display(); //display board
 	   cout << "Enter a move: ";
 	   cin >> input;
 	   if (input == "e")
@@ -70,9 +70,16 @@ int main()
 	   cout << "after move1 = move2, then: " << move1 << " " << move2 << endl;
 	   */
 
-	   source = move1.getSrc();
-	   cout << source;
-	   //sourcePiece = board(source);
+	   cout << move1.getSrc() << endl;
+	   cout << "board[source]: " << board[move1.getSrc()] << endl;
+	   cout << "source:" << endl
+		   << "\t" << board[move1.getSrc()] << endl;
+	   cout << "dest: " << endl
+		   << "\t" << board[move1.getDes()] << endl;
+
+	   board.makeMove(move1.getDes(), board[move1.getSrc()]);
+	   board.makeMove(move1.getSrc(), board[move1.getDes()]);
+
 
    }
    return 0;

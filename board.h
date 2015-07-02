@@ -15,15 +15,16 @@ public:
     Board();
     Board(const Board& orig);
     virtual ~Board();
-    
+	void makeMove(const Position & pos, Piece & piece);
     void setTest(bool test) {isTest = test;}
     bool getTest() const { return isTest; }
     void setup();
     void display() const;
     
     Piece & operator [] (const Position & pos)
-    {return *board[pos.getCol()][pos.getRow()];};
-    
+    {return *board[pos.getRow()][pos.getCol()];};
+
+
     friend ostream & operator << (ostream & out, const Board & rhs);
     
 private:

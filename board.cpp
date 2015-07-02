@@ -96,6 +96,13 @@ void Board::display() const
    }
 }
 
+void Board::makeMove(const Position & pos, Piece & piece)
+{
+	cout << "recieved Piece: " << piece;
+	board[pos.getRow()][pos.getCol()] =  &piece;
+	cout << pos;
+	return;
+}
 
  ostream & operator << (ostream & out, const Board & rhs)
  {
