@@ -21,12 +21,14 @@ Board::~Board()
 
 }
 
-/*
- *   Use Setup so that we can use it when we open a file
+/**************************************************************
+ * Setup (Private)
+ * Sets up the Board, called from the constructor
+ *    INPUT: N/A
+ *    OUTPUT N/A
  * 
- * 
- */
-
+ * Written by Jeffry Simpson
+ *************************************************************/
 void Board::setup()
 {
    isAllocated = true; // setup board
@@ -66,34 +68,76 @@ void Board::setup()
 
 }
 
-
-void Board::display() const
+/**************************************************************
+ * displayText (Private)
+ * displays the text version of the board
+ *    INPUT: N/A
+ *    OUTPUT N/A
+ * 
+ * Written by Jeffry Simpson
+ *************************************************************/
+void Board::displayText() const
 {
    
-   if(isTest)
+   cout << "   abcdefgh\n";
+   // display the board
+   for (int row = 7; row >= 0; row--)
    {
-      cout << "   abcdefgh\n";
-      // display the board
-      for (int row = 7; row >= 0; row--)
-      {
-         cout << " " << row+1 << " ";
-         for (int col = 0; col < 8; col++)
-            cout << *board[row][col];
-         cout << endl;
-      }
+      cout << " " << row+1 << " ";
+      for (int col = 0; col < 8; col++)
+         cout << *board[row][col];
+      cout << endl;
    }
-   else
+   
+     
+}
+
+/**************************************************************
+ * displayFancy (Private)
+ * displays the more graphical version of the board
+ *    INPUT: N/A
+ *    OUTPUT N/A
+ * 
+ * Written by Jeffry Simpson
+ *************************************************************/
+void Board::displayFancy() const
+{
+   cout << "    a  b  c  d  e  f  g  h \n";   //header
+   // display the board
+   for (int row = 7; row >= 0; row--)
    {
-      cout << "   a  b  c  d  e  f  g  h \n";
-      // display the board
-      for (int row = 7; row >= 0; row--)
+      cout << " " << row+1 << " ";
+      for (int col = 0; col < 8; col++)
       {
-         cout << " " << row+1 << " ";
-         for (int col = 0; col < 8; col++)
-            cout << *board[row][col];
-         cout << endl;
+         Piece * piece = board[row][col];   //get current piece
+
+         char id = piece->getLetter();     //do letter manipulation
+         if (id == 'P')                //change pawns to lowercase
+            id = 'p';
+
+         //CHange white pieces to uppercase except for pawns
+         if(piece->getIsWhite() && (piece->getLetter() != 'p'))
+            id = toupper(piece->getLetter());
+
+
+         if(((row % 2 == 0) && (col%2 == 0)) || ((row % 2 == 1) && (col%2 == 1)))
+            //redsquare
+            if(board[row][col]->getIsWhite())  // White piece
+               cout << BLACK_WHITE << id << NONE; 
+            else
+               cout << BLACK_BLACK  << id << NONE; 
+         else
+           //Whitesquare
+            if(board[row][col]->getIsWhite())  // White piece
+               cout << WHITE_WHITE << id << NONE;
+            else
+               cout <<  WHITE_BLACK  << id <<  NONE;
+
       }
+      cout << " " << row+1 << endl;
    }
+    cout << "    a  b  c  d  e  f  g  h \n";   // footer
+   
 }
 
 
@@ -103,12 +147,38 @@ void Board::makeMove(const Position & pos, Piece & piece)
 
 }
 
+/**************************************************************
+ * Display (Private)
+ * Determines which value to display based on isTest
+ *    INPUT: N/A
+ *    OUTPUT N/A
+ * 
+ * Written by Jeffry Simpson
+ *************************************************************/
+void Board::display() const
+{
+
+   if(isTest)
+     displayText();
+  else
+      displayFancy();
+
+      
+}
+
+
+
+/**************************************************************
+ * Operator overload 
+ *
+ * Written by Jeffry Simpson
+ *************************************************************/
 
  ostream & operator << (ostream & out, const Board & rhs)
  {
-    
+  
     rhs.display();
-    
-    return out;
+
+   return out;
  }
 

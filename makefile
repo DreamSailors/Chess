@@ -26,8 +26,8 @@
  #moveTest : piece.o position.o move.o board.o moveTest.o 
 #	g++ -o chess piece.o position.o move.o board.o moveTest.o
 
- chess : piece.o position.o move.o board.o chess.o 
-	g++ -o chess piece.o position.o move.o board.o chess.o
+ chess : piece.o position.o move.o board.o menu.o chess.o 
+	g++ -o chess piece.o position.o move.o board.o menu.o chess.o
 
 
 
@@ -54,6 +54,9 @@ move.o : move.cpp move.h
 
 postion.o : position.cpp position.h
 	g++ -c position.cpp
+	
+menu.o : menu.cpp menu.h
+	g++ -c menu.cpp
 
 moveTest.o : movetest.cpp
 	g++ -c moveTest.cpp
