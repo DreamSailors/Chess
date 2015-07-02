@@ -15,7 +15,8 @@ public:
     Board();
     Board(const Board& orig);
     virtual ~Board();
-  
+    
+    void makeMove(const Position & pos, Piece & piece);
     void setTest(bool test) {isTest = test;}
     bool getTest() const { return isTest; }
  

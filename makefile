@@ -23,6 +23,8 @@
 #	g++ -o chess chess.o chessdriver.o
 #	tar -cf project3.tar *.cpp *.h makefile
 	
+ #moveTest : piece.o position.o move.o board.o moveTest.o 
+#	g++ -o chess piece.o position.o move.o board.o moveTest.o
 
  chess : piece.o position.o move.o board.o menu.o chess.o 
 	g++ -o chess piece.o position.o move.o board.o menu.o chess.o
@@ -56,6 +58,8 @@ postion.o : position.cpp position.h
 menu.o : menu.cpp menu.h
 	g++ -c menu.cpp
 
+moveTest.o : movetest.cpp
+	g++ -c moveTest.cpp
 
 
 

@@ -141,6 +141,12 @@ void Board::displayFancy() const
 }
 
 
+void Board::makeMove(const Position & pos, Piece & piece)
+{
+	board[pos.getRow()][pos.getCol()] =  &piece;
+
+}
+
 /**************************************************************
  * Display (Private)
  * Determines which value to display based on isTest
