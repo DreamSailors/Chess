@@ -10,6 +10,10 @@
 
 #include <iostream>
 #include "move.h"
+#include "board.h"
+#include "piece.h"
+#include "position.h"
+        
 using namespace std;
 
 /*************************************
@@ -19,13 +23,15 @@ int main()
 {
    Move move1;
    Move move2;
+   string input;
 
    Board board;
+   board.setTest(true);
    Space emptySpace(true,0,0);  //Create an empty Space piece to put in Dest
 
-   try
+   for(;;)
    {
-	   board.display(); //display board
+	   cout << board; //display board
 	   cout << "Enter a move: ";
 	   cin >> input;
 	   if (input == "e")
