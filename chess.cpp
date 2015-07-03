@@ -18,8 +18,8 @@
 using namespace std;
 
 Chess::Chess() : playerPrompt(WHITEPLAYER) { setQuitGame(false); }
-Chess::Chess(const Chess& orig) { }
-Chess::~Chess() { }
+Chess::Chess(const Chess & orig) { }
+Chess::~Chess() {}
 
 Board board;
 Move move1;
@@ -49,10 +49,12 @@ void Chess::pickMenuOption()
       menuOption = TEST;
    else if (x == "rank" || x == "Rank" || x == "RANK")
       menuOption = RANK;
-   else
+   else if(x.size() >= 4)
    {
       menuOption = MOVE;
    }
+   else
+      menuOption = UNKNOWN;
 }
 
 
@@ -61,23 +63,24 @@ void Chess::processInput()
    switch(menuOption)
    {
       case QUIT:
-		  this->leaveGame();
-		  break;
+	this->leaveGame();
+	break;
       case QUESTION:
          this->displayMenu();
          break;
       case TEST:
-		 this->boardFlip();
+         this->boardFlip();
          break;  
-	  case READ:
-		  break;
-	  case HELP:
-		  this->displayHelp();
-		  break;
-	  case MOVE:
-		  this->makeMove();
-      //default:
-         //cout << "invalid entry, please try again\n";
+      case READ:
+	break;
+      case HELP:
+	this->displayHelp();
+	break;
+      case MOVE:
+	this->makeMove();
+        break;
+      default:
+         cout << "invalid entry, please try again\n";
    }
 }
 
@@ -132,6 +135,8 @@ void Chess::makeMove()
            board[move1.getSrc()].setValidMoveList();
            if(board[move1.getSrc()].validateMove(move1.getDes()))
            {
+              //how do we check for other piece
+              
 		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
 		board[move1.getSrc()].setPos(move1.getDes());
 		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
@@ -139,7 +144,7 @@ void Chess::makeMove()
 		cout << board;
            }
            else
-              cout << "mistake";
+              cout << "Can't move here";
 	}
 	else
 		cout << "Wait your turn!\n";
@@ -189,6 +194,8 @@ int main()
 	   
 	   cout << game;
    }
+   
 
+   
    return 0;
 }

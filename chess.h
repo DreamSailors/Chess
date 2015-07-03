@@ -39,6 +39,7 @@ enum MenuOpt {
    TEST,
    MOVE,
    RANK,
+   UNKNOWN,
 };
 
 
