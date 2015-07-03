@@ -12,13 +12,153 @@
 *      Please describe briefly what was the most difficult part.
 ************************************************************************/
 
-#include <cstdlib>
-#include <iostream>    // for CIN and COUT
-#include "piece.h"
-#include "board.h"
-#include "menu.h"
+
+#include "chess.h"
 
 using namespace std;
+
+Chess::Chess() : playerPrompt(WHITEPLAYER) { setQuitGame(false); }
+Chess::Chess(const Chess& orig) { }
+Chess::~Chess() { }
+
+Board board;
+Move move1;
+Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
+
+void Chess::getUserInput()
+{
+
+   cout << getPrompt() << " ";
+   cin >> userInput;
+  
+}
+
+void Chess::pickMenuOption()
+{
+   string x = userInput;
+   
+   if ( x == "quit" || x == "Quit" || x == "QUIT")
+      menuOption = QUIT;
+   else if ( x == "read" || x == "Read" || x == "READ")
+      menuOption = READ;
+   else if ( x == "?" )
+      menuOption = QUESTION;
+   else if ( x == "Help"  || x == "help" || x == "HELP")
+      menuOption = HELP;
+   else if (x == "test" || x == "Test" || x == "TEST")
+      menuOption = TEST;
+   else if (x == "rank" || x == "Rank" || x == "RANK")
+      menuOption = RANK;
+   else
+   {
+      menuOption = MOVE;
+   }
+}
+
+
+void Chess::processInput() 
+{
+   switch(menuOption)
+   {
+      case QUIT:
+		  this->leaveGame();
+		  break;
+      case QUESTION:
+         this->displayMenu();
+         break;
+      case TEST:
+		 this->boardFlip();
+         break;  
+	  case READ:
+		  break;
+	  case HELP:
+		  this->displayHelp();
+		  break;
+	  case MOVE:
+		  this->makeMove();
+      //default:
+         //cout << "invalid entry, please try again\n";
+   }
+}
+
+void Chess::leaveGame()
+{
+	cout << "save?"; //save file stuff goes here
+	setQuitGame(true);
+}
+
+
+void Chess::displayMenu()
+{
+
+   cout << "Options:\n";
+   cout << "?      Display these options\n";
+   cout << "b2b4   Specify a move using the Smith Notation\n";
+   cout << "read   Read a saved game from a file\n";
+   cout << "help   Display all possible moves for a given piece\n";
+   cout << "test   Simple display for test purposes\n";
+   cout << "rank   Who is winning?  What is the rank\n";
+   cout << "quit   Leave the game. You will be prompted to save\n";
+}
+void Chess::boardFlip() //changes board to and from test mode
+{
+	board.setTest(!board.getTest());
+	cout << board;
+}
+
+void Chess::readGame()
+{
+	;
+}
+void Chess::displayHelp()
+{
+   cout << "Which piece would you like to find the moves for?";
+   
+}
+
+void Chess::makeMove()
+{
+	move1 = userInput;
+	this->checkSameColor(); //check that the move piece matches the turn
+	if (getIsSameColor())
+	{
+		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination   
+		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
+		this->setPrompt();
+		cout << board;
+	}
+	else
+		cout << "Wait your turn!\n";
+}
+
+void Chess::checkSameColor()
+{
+	if ((playerPrompt == WHITEPLAYER && board[move1.getSrc()].getIsWhite() == true) ||
+		(playerPrompt == BLACKPLAYER && board[move1.getSrc()].getIsWhite() == false))
+		setIsSameColor(true);
+	else
+		setIsSameColor(false);
+}
+void Chess::setPrompt() 
+{
+        
+   if(playerPrompt == WHITEPLAYER)
+      playerPrompt = BLACKPLAYER;
+   else
+      playerPrompt = WHITEPLAYER;
+   
+ 
+}
+
+ostream & operator << (ostream & out,  Chess & rhs) 
+{
+   rhs.getUserInput();
+   rhs.pickMenuOption();
+   rhs.processInput();
+   //rhs.displayMenu();
+   
+   return out;
+}
 
 /**********************************************************************
  * MAIN: This is a driver program for our various piece classes.
@@ -27,25 +167,14 @@ using namespace std;
 int main()
 {
    Board board;
-   Menu menu;
-   
+   Chess game;
+
    cout << board;
-   cout << menu;
-//   menu.getUserInput();
-//   menu.displayMenu();
-   
-   
-
-   
-  // board.setup();   // Setup the new board
-   
-  // board.setTest(true);   //temp test setup
-  // board.display();  //display the content
-  
-   
-
+   while (!game.getQuitGame())
+   {
+	   
+	   cout << game;
+   }
 
    return 0;
 }
-
-
