@@ -50,6 +50,7 @@ public:
    friend ostream & operator << (ostream & out, const Piece & rhs);
    Position getPos()         { return this->position; }
    virtual void setValidMoveList() { validMoveList = '\0'; };
+   virtual void setPos(Position pos) { this->position = pos; };
 protected:
     Position position;
     bool isWhite;
@@ -78,7 +79,7 @@ public:
 	void setValidMoveList()
 	{
 
-		//validMoveList = setValidKing(this->getPos());
+		setValidKing(this->getPos());
 	}
 private:
 	string setValidKing(const Position & pos);

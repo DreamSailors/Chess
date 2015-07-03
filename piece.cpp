@@ -30,6 +30,16 @@ ostream & operator << (ostream & out, const Piece & rhs)
 string King::setValidKing(const Position & pos)
 {
 	//cout << board[pos];
+	Position possibleMoveArray[8][1];
+	possibleMoveArray[0][0] = this->getPos() += RIGHT;
+	possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
+	possibleMoveArray[2][0] = this->getPos() += UP;
+
+	
+	cout << this->getPos();
+	cout << possibleMoveArray[0][0];
+	cout << possibleMoveArray[1][0];
+
 
 	return "test";
 }

@@ -39,7 +39,7 @@ void Board::setup()
    board[0][1] = new Knight(true, 7,1 /*white*/);
    board[0][2] = new Bishop(true, 7,2 /*white*/);
    board[0][3] = new Queen (true, 7,3 /*white*/);
-   board[0][4] = new King  (true, 7,4 /*white*/);
+   board[0][4] = new King  (true, 0,4 /*white*/);
    board[0][5] = new Bishop(true, 7,5 /*white*/);
    board[0][6] = new Knight(true, 7,6 /*white*/);
    board[0][7] = new Rook  (true, 7,7 /*white*/);
@@ -61,7 +61,7 @@ void Board::setup()
    board[7][1] = new Knight(false, 0,1 /*black*/);
    board[7][2] = new Bishop(false, 0,2 /*black*/);
    board[7][3] = new Queen (false, 0,3 /*black*/);
-   board[7][4] = new King  (false, 0,4 /*black*/);
+   board[7][4] = new King  (false, 7,4 /*black*/);
    board[7][5] = new Bishop(false, 0,5 /*black*/);
    board[7][6] = new Knight(false, 0,6 /*black*/);
    board[7][7] = new Rook  (false, 0,7 /*black*/);
