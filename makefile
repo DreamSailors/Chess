@@ -26,8 +26,8 @@
  #moveTest : piece.o position.o move.o board.o moveTest.o 
 #	g++ -o chess piece.o position.o move.o board.o moveTest.o
 
- chess : piece.o position.o move.o board.o menu.o chess.o 
-	g++ -o chess piece.o position.o move.o board.o menu.o chess.o
+ chess : piece.o position.o move.o board.o chess.o
+	g++ -o chess piece.o position.o move.o board.o chess.o
 
 
 
@@ -40,8 +40,8 @@
 #    pong.o        Only the greatest game ever! (and it was for 20 years)  
 ###############################################################
 
-chess.o : chess.cpp piece.h
-	g++ -c chess.cpp
+#chess.o : chess.cpp piece.h
+#	g++ -c chess.cpp
 	
 board.o : board.cpp board.h
 	g++ -c board.cpp
@@ -55,8 +55,8 @@ move.o : move.cpp move.h
 postion.o : position.cpp position.h
 	g++ -c position.cpp
 	
-menu.o : menu.cpp menu.h
-	g++ -c menu.cpp
+chess.o : chess.cpp chess.h
+	g++ -c chess.cpp
 
 moveTest.o : movetest.cpp
 	g++ -c moveTest.cpp
