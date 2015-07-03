@@ -41,21 +41,26 @@ class Piece
 {
 public:
 	
-	Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row, col) { setValidMoveList(); }
+   Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row, col), moved(false) { setValidMoveList(); }
    virtual ~Piece() { }
-   bool getIsWhite() const                { return isWhite; }
+   bool getIsWhite() const          { return isWhite; }
+   bool hasMoved()   const          {return moved; }
    virtual char getLetter() const  = 0;
    virtual int getScore() const = 0;
-   string getValidMoveList() { return validMoveList; }
+   
+   //string getValidMoveList() { return validMoveList; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
    Position getPos()         { return this->position; }
-   virtual void setValidMoveList() { validMoveList = '\0'; };
+   virtual void setValidMoveList() { /*validMoveList = '\0';*/ };
    virtual void setPos(Position pos) { this->position = pos; };
+   
 protected:
     Position position;
+    bool moved;
     bool isWhite;
-	string validMoveList;
-	string setValidKing();
+    void setMove(bool moved) {this->moved = moved;};
+
+
 	
 };
 

@@ -35,14 +35,14 @@ void Board::setup()
    
    
     // the white army
-   board[0][0] = new Rook  (true, 7,0 /*white*/);
-   board[0][1] = new Knight(true, 7,1 /*white*/);
-   board[0][2] = new Bishop(true, 7,2 /*white*/);
-   board[0][3] = new Queen (true, 7,3 /*white*/);
+   board[0][0] = new Rook  (true, 0,0 /*white*/);
+   board[0][1] = new Knight(true, 0,1 /*white*/);
+   board[0][2] = new Bishop(true, 0,2 /*white*/);
+   board[0][3] = new Queen (true, 0,3 /*white*/);
    board[0][4] = new King  (true, 0,4 /*white*/);
-   board[0][5] = new Bishop(true, 7,5 /*white*/);
-   board[0][6] = new Knight(true, 7,6 /*white*/);
-   board[0][7] = new Rook  (true, 7,7 /*white*/);
+   board[0][5] = new Bishop(true, 0,5 /*white*/);
+   board[0][6] = new Knight(true, 0,6 /*white*/);
+   board[0][7] = new Rook  (true, 0,7 /*white*/);
 
    // the pawns
    for (int col = 0; col < 8; col++)
@@ -57,14 +57,14 @@ void Board::setup()
          board[row][col] = new Space(false,row,col);
    
    // the black army
-   board[7][0] = new Rook  (false, 0,0 /*black*/);
-   board[7][1] = new Knight(false, 0,1 /*black*/);
-   board[7][2] = new Bishop(false, 0,2 /*black*/);
-   board[7][3] = new Queen (false, 0,3 /*black*/);
+   board[7][0] = new Rook  (false, 7,0 /*black*/);
+   board[7][1] = new Knight(false, 7,1 /*black*/);
+   board[7][2] = new Bishop(false, 7,2 /*black*/);
+   board[7][3] = new Queen (false, 7,3 /*black*/);
    board[7][4] = new King  (false, 7,4 /*black*/);
-   board[7][5] = new Bishop(false, 0,5 /*black*/);
-   board[7][6] = new Knight(false, 0,6 /*black*/);
-   board[7][7] = new Rook  (false, 0,7 /*black*/);
+   board[7][5] = new Bishop(false, 7,5 /*black*/);
+   board[7][6] = new Knight(false, 7,6 /*black*/);
+   board[7][7] = new Rook  (false, 7,7 /*black*/);
 
 }
 
