@@ -28,7 +28,7 @@ Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
 void Chess::getUserInput()
 {
 
-   cout << getPrompt() << " ";
+   cout << getPlayerPrompt() << " ";
    cin >> userInput;
   
 }
@@ -86,8 +86,19 @@ void Chess::processInput()
 
 void Chess::leaveGame()
 {
-	cout << "save?"; //save file stuff goes here
-	setQuitGame(true);
+   char fileName[256];
+   char line[25];  
+  
+   cin.getline( line, 25, '\n' );
+   cout << "To save a game, please specify the filename.\n";
+   cout << "    To quit without saving a file, just press <enter>\n";
+
+   cin.getline( fileName, 256);
+  
+   ofstream out(fileName);
+   out << allMoves;
+   out.close();
+   setQuitGame(true);
 }
 
 
@@ -136,18 +147,29 @@ void Chess::makeMove()
            if(board[move1.getSrc()].validateMove(move1.getDes()))
            {
               //how do we check for other piece
-              
-		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
-		board[move1.getSrc()].setPos(move1.getDes());
-		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
-		this->setPrompt();
+               writeMoves(move1);
+               board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
+               board[move1.getSrc()].setPos(move1.getDes());
+               board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
+               this->setPrompt();
+                                      
 		cout << board;
+
            }
            else
               cout << "Can't move here";
 	}
 	else
 		cout << "Wait your turn!\n";
+}
+
+void Chess::writeMoves(Move move)
+{
+   allMoves += move.getText();
+   if(playerPrompt == WHITEPLAYER)
+      allMoves += " ";
+   else
+      allMoves += "\n";
 }
 
 void Chess::checkSameColor()
@@ -168,6 +190,7 @@ void Chess::setPrompt()
    
  
 }
+
 
 ostream & operator << (ostream & out,  Chess & rhs) 
 {

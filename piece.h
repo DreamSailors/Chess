@@ -90,65 +90,10 @@ public:
 	Position possibleMoveArray[8][1];
 	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
-        
-    /**************************************************************
-    * ValidateMove
-    * Given a piece location determines if it is a valid move
-    *************************************************************/
-        bool validateMove(Position pos)
-        {
-            bool valid = false;
-            
-              for (int i = 0; i < 8; i++)
-                    if (possibleMoveArray[i][0].isValid())
-                        if(pos == possibleMoveArray[i][0])
-                        {
-                            valid = true;
-                            break;
-                        }                    
-            
-            return(valid);
-        }
- 
-    /**************************************************************
-    * getValidMoveList
-    * Given a piece location displays all valid moves
-    *************************************************************/
-        void getValidMoveList()
-        {
-         
-            
-              for (int i = 0; i < 8; i++)
-        	{
-                    if (possibleMoveArray[i][0].isValid())
-                        cout << possibleMoveArray[i][0] << endl;   
-                        
-        	}
-            
-         }
-        
-    /**************************************************************
-    * setValidMoveList
-    * Given a piece location displays all possible moves
-    *************************************************************/
-	void setValidMoveList()
-	{
-		possibleMoveArray[0][0] = this->getPos() += RIGHT;
-		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
-		possibleMoveArray[2][0] = this->getPos() += UP;
-		possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
-		possibleMoveArray[4][0] = this->getPos() += LEFT;
-		possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
-		possibleMoveArray[6][0] = this->getPos() += DOWN;
-		possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
-
-		cout << this->getPos();
-		for (int i = 0; i < 8; i++)
-		{
-			cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
-		}
-	}
-};
+        bool validateMove(Position pos);
+        void getValidMoveList();
+        void setValidMoveList();
+ };
 
 class Queen : public Piece
 {
