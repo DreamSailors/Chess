@@ -25,6 +25,7 @@ enum MenuOpt {
    READ,
    TEST,
    MOVE,
+   RANK,
 };
 
 
@@ -36,13 +37,23 @@ enum MenuOpt {
 class Menu {
 public:
     Menu();
-    Menu(const Menu& orig);
+    Menu(const Menu & orig);
     virtual ~Menu();
     
     void displayMenu();
     void displayHelp();
+	void boardFlip();
     void getUserInput();
-   
+	void leaveGame();
+	void readGame();
+	void makeMove();
+	void checkSameColor();
+	int getMenuOption()							{ return menuOption; }
+	void setQuitGame(bool quit)					{ quitGame = quit; }
+	bool getQuitGame()							{ return quitGame; }
+	void setIsSameColor(bool setColor)			{ isSameColor = setColor; }
+	bool getIsSameColor()						{ return isSameColor; }
+
     friend ostream & operator << (ostream & out, Menu & rhs);
     
     bool operator == (const Menu & rhs) const
@@ -61,6 +72,8 @@ private:
     string playerPrompt;
     string userInput;
     int menuOption;
+	bool quitGame;
+	bool isSameColor;
 
     
     string getPrompt() const {return playerPrompt;};
