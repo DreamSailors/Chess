@@ -79,11 +79,11 @@ class King : public Piece
 public:
 	King(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
 	{ };
+	Position possibleMoveArray[8][1];
 	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
 	void setValidMoveList()
 	{
-		Position possibleMoveArray[8][1];
 		possibleMoveArray[0][0] = this->getPos() += RIGHT;
 		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
 		possibleMoveArray[2][0] = this->getPos() += UP;
@@ -106,9 +106,36 @@ class Queen : public Piece
    public:
       Queen(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
       { };
+	  Position possibleMoveArray[7][7];
       virtual int getScore() const    { return getIsWhite() ? 9: -9;}
       virtual char getLetter() const  { return getIsWhite() ? 'q' : 'Q';}
-   
+	  void setValidMoveList()
+	  {
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[0][i] = this->getPos() += {0, i + 1};//RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[1][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[2][i] = this->getPos() += {i + 1, 0}; //UP
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[3][i] = this->getPos() += {i + 1, -i - 1}; //UP and LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[4][i] = this->getPos() += {0, -i - 1}; // LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[5][i] = this->getPos() += {-i - 1, -i - 1};//DOWN and LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[6][i] = this->getPos() += {-i - 1, 0}; //DOWN
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[7][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
+
+
+		  for (int i = 0; i < 8; i++)
+		  {
+			  for (int j = 0; j < 7; j++)
+				  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
+			  cout << endl;
+		  }
+	  }
 };
 
 class Pawn : public Piece
@@ -116,9 +143,21 @@ class Pawn : public Piece
    public:
      Pawn(const bool isWhite, int row, int col) : Piece(isWhite,row,col)
       { };
+	 Position(possibleMoveArray[2][3]);
      virtual int getScore() const    { return getIsWhite() ? 1: -1;}
      virtual char getLetter() const  { return getIsWhite() ? 'p' : 'P';}
-   
+	 void setValidMoveList()
+	 {
+		 for (int i = 0; i < 2; i++)
+			 //		 if (isWhite)
+			 //	 {
+			 //		 possibleMoveArray[0][0] = this->getPos() += {1, 1};// Up and right
+			 //		 possibleMoveArray[0][1]
+			 //	 }
+
+			 //	 else
+			 ;
+	 }
 };
 
 class Rook : public Piece
@@ -126,33 +165,25 @@ class Rook : public Piece
 public:
       Rook(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
       { };
+	  Position possibleMoveArray[3][7];
       virtual int getScore() const    { return getIsWhite() ? 5: -5;}
       virtual char getLetter() const  { return getIsWhite() ? 'r' : 'R';}
 	  void setValidMoveList()
 	  {
-		  Position possibleMoveArray[8][8];
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[0][i] = this->getPos() += RIGHT;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[1][i] = this->getPos() += UP_RIGHT;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[2][i] = this->getPos() += UP;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[3][i] = this->getPos() += UP_LEFT;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[4][i] = this->getPos() += LEFT;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[5][i] = this->getPos() += DOWN_LEFT;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[6][i] = this->getPos() += DOWN;
-		  for (int i = 0; i < 8; i++)
-			  possibleMoveArray[7][i] = this->getPos() += DOWN_RIGHT;
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[0][i] = this->getPos() += {0, i +1};//RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[1][i] = this->getPos() += {i + 1, 0}; //UP
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[2][i] = this->getPos() += {0, -i - 1}; // LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[3][i] = this->getPos() += {-i - 1, 0}; //DOWN
 
-		  cout << this->getPos();
-		  for (int i = 0; i < 8; i++)
+		  for (int i = 0; i < 4; i++)
 		  {
-			  for (int j = 0; j < 8; j ++)
-			  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
+			  for (int j = 0; j < 7; j ++)
+			  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
+			  cout << endl;
 		  }
 	  }
 };
@@ -162,8 +193,26 @@ class Knight : public Piece
    public:
       Knight(const bool isWhite, int row, int col) : Piece(isWhite, row,col)
       { };
+	  Position possibleMoveArray[8][1];
       virtual int getScore() const    { return getIsWhite() ? 3: -3;}
       virtual char getLetter() const  { return getIsWhite() ? 'n' : 'N';}
+	  void setValidMoveList()
+	  {
+		  possibleMoveArray[0][0] = this->getPos() += {1, 2}; //up one, right 2
+		  possibleMoveArray[1][0] = this->getPos() += {2, 1}; //up two, right 1
+		  possibleMoveArray[2][0] = this->getPos() += {1, -2}; //up one, left 2
+		  possibleMoveArray[3][0] = this->getPos() += {2, -1}; //up two, left 1
+		  possibleMoveArray[4][0] = this->getPos() += {-1, 2}; //down one, right 2
+		  possibleMoveArray[5][0] = this->getPos() += {-2, 1}; //down two, right 1
+		  possibleMoveArray[6][0] = this->getPos() += {-1, -2}; //down one, left 2
+		  possibleMoveArray[7][0] = this->getPos() += {-2, -1}; //down two, left 1
+
+		  cout << this->getPos();
+		  for (int i = 0; i < 7; i++)
+		  {
+			  cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
+		  }
+	  }
    
 };
 
@@ -172,9 +221,28 @@ class Bishop : public Piece
    public:
      Bishop(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
       { };
+	 Position possibleMoveArray[3][7];
      virtual int getScore() const    { return getIsWhite() ? 3: -3;}
      virtual char getLetter() const  { return getIsWhite() ? 'b' : 'B';}
-   
+	 void setValidMoveList()
+	 {
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[0][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[1][i] = this->getPos() += {i + 1, -i - 1}; //UP and LEFT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[2][i] = this->getPos() += {-i - 1, -i - 1};//DOWN and LEFT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[3][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
+
+
+		 for (int i = 0; i < 4; i++)
+		 {
+			 for (int j = 0; j < 7; j++)
+				 cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
+			 cout << endl;
+		 }
+	 }
 };
 
 
