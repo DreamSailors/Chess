@@ -78,11 +78,22 @@ public:
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
 	void setValidMoveList()
 	{
+		Position possibleMoveArray[8][1];
+		possibleMoveArray[0][0] = this->getPos() += RIGHT;
+		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
+		possibleMoveArray[2][0] = this->getPos() += UP;
+		possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
+		possibleMoveArray[4][0] = this->getPos() += LEFT;
+		possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
+		possibleMoveArray[6][0] = this->getPos() += DOWN;
+		possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
 
-		setValidKing(this->getPos());
+		cout << this->getPos();
+		for (int i = 0; i < 8; i++)
+		{
+			cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
+		}
 	}
-private:
-	string setValidKing(const Position & pos);
 };
 
 class Queen : public Piece
@@ -112,6 +123,23 @@ public:
       { };
       virtual int getScore() const    { return getIsWhite() ? 5: -5;}
       virtual char getLetter() const  { return getIsWhite() ? 'r' : 'R';}
+	  void setValidMoveList()
+	  {
+		  Position possibleMoveArray[8][8];
+		  possibleMoveArray[0][0] = this->getPos() += RIGHT;
+		  possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
+		  possibleMoveArray[2][0] = this->getPos() += UP;
+		  possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
+		  possibleMoveArray[4][0] = this->getPos() += LEFT;
+		  possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
+		  possibleMoveArray[6][0] = this->getPos() += DOWN;
+		  possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
+
+		  cout << this->getPos();
+		  for (int i = 0; i < 8; i++)
+		  {
+			  cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
+		  }
    
 };
 
