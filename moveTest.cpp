@@ -11,8 +11,6 @@
 #include <iostream>
 #include "move.h"
 #include "board.h"
-#include "piece.h"
-#include "position.h"
         
 using namespace std;
 

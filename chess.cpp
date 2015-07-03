@@ -28,16 +28,20 @@ int main()
 {
    Board board;
    Menu menu;
-   
+
    cout << board;
-   cout << menu;
+   while (!menu.getQuitGame())
+   {
+	   
+	   cout << menu;
+   }
 //   menu.getUserInput();
 //   menu.displayMenu();
    
    
 
    
-  // board.setup();   // Setup the new board
+
    
   // board.setTest(true);   //temp test setup
   // board.display();  //display the content
