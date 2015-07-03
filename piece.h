@@ -149,14 +149,14 @@ class Pawn : public Piece
 	 void setValidMoveList()
 	 {
 		 for (int i = 0; i < 2; i++)
-			 if (isWhite)
-			 {
-				 possibleMoveArray[0][0] = this->getPos() += {1, 1};// Up and right
-				 possibleMoveArray[0][1]
-			 }
+			 //		 if (isWhite)
+			 //	 {
+			 //		 possibleMoveArray[0][0] = this->getPos() += {1, 1};// Up and right
+			 //		 possibleMoveArray[0][1]
+			 //	 }
 
-			 else
-
+			 //	 else
+			 ;
 	 }
 };
 
