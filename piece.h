@@ -15,9 +15,12 @@
 
 #ifndef PIECE_H
 #define	PIECE_H
+#define MAC
+
 
 #include <iostream>
 #include <cassert>
+#include <string>
 #include "move.h"
 #include "position.h"
 
@@ -53,9 +56,14 @@ public:
    Position getPos()         { return this->position; }
    virtual void setValidMoveList() { /*validMoveList = '\0';*/ };
    virtual void setPos(Position pos) { this->position = pos; };
+   //Position possibleMoveArray[0][0];
+   virtual bool validateMove(Position pos) {return false;};
+   virtual void getValidMoveList() {};
+   
    
 protected:
     Position position;
+    string validMovelist;
     bool moved;
     bool isWhite;
     void setMove(bool moved) {this->moved = moved;};
@@ -82,6 +90,37 @@ public:
 	Position possibleMoveArray[8][1];
 	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
+        
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+              for (int i = 0; i < 8; i++)
+        	{
+                    if (possibleMoveArray[i][0].isValid())
+                        if(pos == possibleMoveArray[i][0])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+        	}      
+            
+            return(valid);
+        }
+      
+        void getValidMoveList()
+        {
+         
+            
+              for (int i = 0; i < 8; i++)
+        	{
+                    if (possibleMoveArray[i][0].isValid())
+                        cout << possibleMoveArray[i][0] << endl;   
+                        
+        	}
+            
+         }
+        
 	void setValidMoveList()
 	{
 		possibleMoveArray[0][0] = this->getPos() += RIGHT;
@@ -111,8 +150,27 @@ class Queen : public Piece
       virtual char getLetter() const  { return getIsWhite() ? 'q' : 'Q';}
 	  void setValidMoveList()
 	  {
+#ifdef MAC
+
 		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[0][i] = this->getPos() += {0, i + 1};//RIGHT
+			  possibleMoveArray[0][i] = this->getPos() += (Delta){0, 1 + 1};//RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[1][i] = this->getPos() += (Delta){i + 1, i + 1};//UP and RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[2][i] = this->getPos() += (Delta){i + 1, 0}; //UP
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[3][i] = this->getPos() += (Delta){i + 1, -i - 1}; //UP and LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[4][i] = this->getPos() += (Delta){0, -i - 1}; // LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[5][i] = this->getPos() += (Delta){-i - 1, -i - 1};//DOWN and LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[6][i] = this->getPos() += (Delta){-i - 1, 0}; //DOWN
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[7][i] = this->getPos() += (Delta){-i - 1, i + 1}; //DOWN and RIGHT
+#else
+ 		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[0][i] = this->getPos() += {0, 1 + 1};//RIGHT
 		  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[1][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
 		  for (int i = 0; i < 7; i++)
@@ -126,8 +184,8 @@ class Queen : public Piece
 		  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[6][i] = this->getPos() += {-i - 1, 0}; //DOWN
 		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[7][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
-
+			  possibleMoveArray[7][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT                         
+#endif
 
 		  for (int i = 0; i < 8; i++)
 		  {
@@ -170,7 +228,17 @@ public:
       virtual char getLetter() const  { return getIsWhite() ? 'r' : 'R';}
 	  void setValidMoveList()
 	  {
+#ifdef MAC             
 		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[0][i] = this->getPos() += (Delta){0, i +1};//RIGHT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[1][i] = this->getPos() += (Delta){i + 1, 0}; //UP
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[2][i] = this->getPos() += (Delta){0, -i - 1}; // LEFT
+		  for (int i = 0; i < 7; i++)
+			  possibleMoveArray[3][i] = this->getPos() += (Delta){-i - 1, 0}; //DOWN
+#else
+                  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[0][i] = this->getPos() += {0, i +1};//RIGHT
 		  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[1][i] = this->getPos() += {i + 1, 0}; //UP
@@ -178,6 +246,7 @@ public:
 			  possibleMoveArray[2][i] = this->getPos() += {0, -i - 1}; // LEFT
 		  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[3][i] = this->getPos() += {-i - 1, 0}; //DOWN
+#endif
 
 		  for (int i = 0; i < 4; i++)
 		  {
@@ -198,6 +267,16 @@ class Knight : public Piece
       virtual char getLetter() const  { return getIsWhite() ? 'n' : 'N';}
 	  void setValidMoveList()
 	  {
+#ifdef MAC
+		  possibleMoveArray[0][0] = this->getPos() += (Delta){1, 2}; //up one, right 2
+		  possibleMoveArray[1][0] = this->getPos() += (Delta){2, 1}; //up two, right 1
+		  possibleMoveArray[2][0] = this->getPos() += (Delta){1, -2}; //up one, left 2
+		  possibleMoveArray[3][0] = this->getPos() += (Delta){2, -1}; //up two, left 1
+		  possibleMoveArray[4][0] = this->getPos() += (Delta){-1, 2}; //down one, right 2
+		  possibleMoveArray[5][0] = this->getPos() += (Delta){-2, 1}; //down two, right 1
+		  possibleMoveArray[6][0] = this->getPos() += (Delta){-1, -2}; //down one, left 2
+		  possibleMoveArray[7][0] = this->getPos() += (Delta){-2, -1}; //down two, left 1
+#else
 		  possibleMoveArray[0][0] = this->getPos() += {1, 2}; //up one, right 2
 		  possibleMoveArray[1][0] = this->getPos() += {2, 1}; //up two, right 1
 		  possibleMoveArray[2][0] = this->getPos() += {1, -2}; //up one, left 2
@@ -206,6 +285,8 @@ class Knight : public Piece
 		  possibleMoveArray[5][0] = this->getPos() += {-2, 1}; //down two, right 1
 		  possibleMoveArray[6][0] = this->getPos() += {-1, -2}; //down one, left 2
 		  possibleMoveArray[7][0] = this->getPos() += {-2, -1}; //down two, left 1
+#endif
+
 
 		  cout << this->getPos();
 		  for (int i = 0; i < 7; i++)
@@ -226,15 +307,25 @@ class Bishop : public Piece
      virtual char getLetter() const  { return getIsWhite() ? 'b' : 'B';}
 	 void setValidMoveList()
 	 {
+#ifdef MAC
 		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[0][i] = this->getPos() += (Delta){i + 1, i + 1};//UP and RIGHT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[1][i] = this->getPos() += (Delta){i + 1, -i - 1}; //UP and LEFT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[2][i] = this->getPos() += (Delta){-i - 1, -i - 1};//DOWN and LEFT
+		 for (int i = 0; i < 7; i++)
+			 possibleMoveArray[3][i] = this->getPos() += (Delta){-i - 1, i + 1}; //DOWN and RIGHT
+#else
+  		 for (int i = 0; i < 7; i++)
 			 possibleMoveArray[0][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
 		 for (int i = 0; i < 7; i++)
 			 possibleMoveArray[1][i] = this->getPos() += {i + 1, -i - 1}; //UP and LEFT
 		 for (int i = 0; i < 7; i++)
 			 possibleMoveArray[2][i] = this->getPos() += {-i - 1, -i - 1};//DOWN and LEFT
 		 for (int i = 0; i < 7; i++)
-			 possibleMoveArray[3][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
-
+			 possibleMoveArray[3][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGH                       
+#endif 
 
 		 for (int i = 0; i < 4; i++)
 		 {
