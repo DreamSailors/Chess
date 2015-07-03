@@ -126,21 +126,30 @@ public:
 	  void setValidMoveList()
 	  {
 		  Position possibleMoveArray[8][8];
-		  possibleMoveArray[0][0] = this->getPos() += RIGHT;
-		  possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
-		  possibleMoveArray[2][0] = this->getPos() += UP;
-		  possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
-		  possibleMoveArray[4][0] = this->getPos() += LEFT;
-		  possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
-		  possibleMoveArray[6][0] = this->getPos() += DOWN;
-		  possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[0][i] = this->getPos() += RIGHT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[1][i] = this->getPos() += UP_RIGHT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[2][i] = this->getPos() += UP;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[3][i] = this->getPos() += UP_LEFT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[4][i] = this->getPos() += LEFT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[5][i] = this->getPos() += DOWN_LEFT;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[6][i] = this->getPos() += DOWN;
+		  for (int i = 0; i < 8; i++)
+			  possibleMoveArray[7][i] = this->getPos() += DOWN_RIGHT;
 
 		  cout << this->getPos();
 		  for (int i = 0; i < 8; i++)
 		  {
-			  cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
+			  for (int j = 0; j < 8; j ++)
+			  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
 		  }
-   
+	  }
 };
 
 class Knight : public Piece
