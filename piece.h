@@ -13,8 +13,8 @@
 ************************************************************************/
 
 
-#ifndef CHESS_H
-#define	CHESS_H
+#ifndef PIECE_H
+#define	PIECE_H
 
 #include <iostream>
 #include <cassert>

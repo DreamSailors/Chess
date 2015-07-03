@@ -102,6 +102,9 @@ void Board::displayText() const
  *************************************************************/
 void Board::displayFancy() const
 {
+   
+   cout << "\E[H\E[2J";   //Clear the Terminal Screen
+   
    cout << "    a  b  c  d  e  f  g  h \n";   //header
    // display the board
    for (int row = 7; row >= 0; row--)
