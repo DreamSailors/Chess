@@ -13,8 +13,10 @@
 ************************************************************************/
 
 #include "piece.h"
+#include "board.h"
 
 
+//Board board;
 /*********************************************
  * OUT << PIECE
  * Insertion operator for the piece
@@ -25,3 +27,9 @@ ostream & operator << (ostream & out, const Piece & rhs)
    return out;
 }
 
+string King::setValidKing(const Position & pos)
+{
+	//cout << board[pos];
+
+	return "test";
+}

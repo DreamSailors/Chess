@@ -21,6 +21,7 @@
 #include "move.h"
 #include "position.h"
 
+
 using namespace std;
 
 #define WHITE_WHITE "\E[31;47m " // white square white piece
@@ -39,19 +40,22 @@ using namespace std;
 class Piece 
 {
 public:
-   Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row,col) {  }
+	
+	Piece(bool isWhite, int row, int col) : isWhite(isWhite), position(row, col) { setValidMoveList(); }
    virtual ~Piece() { }
    bool getIsWhite() const                { return isWhite; }
    virtual char getLetter() const  = 0;
    virtual int getScore() const = 0;
-//  virtual char getLetter() const { return 0; }
-//   virtual int getScore() const { return PIECE_EMPTY; }
+   string getValidMoveList() { return validMoveList; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
    Position getPos()         { return this->position; }
-   
+   virtual void setValidMoveList() { validMoveList = '\0'; };
 protected:
     Position position;
     bool isWhite;
+	string validMoveList;
+	string setValidKing();
+	
 };
 
 class Space : public Piece
@@ -67,11 +71,17 @@ public:
 class King : public Piece
 {
 public:
-   King(const bool isWhite, int row, int col) : Piece(isWhite, row, col)   
-   { };
-   virtual int getScore() const    { return getIsWhite() ? 1000: -1000;}
-   virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K';}
-    
+	King(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
+	{ };
+	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
+	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
+	void setValidMoveList()
+	{
+
+		//validMoveList = setValidKing(this->getPos());
+	}
+private:
+	string setValidKing(const Position & pos);
 };
 
 class Queen : public Piece

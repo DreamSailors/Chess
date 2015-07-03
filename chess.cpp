@@ -112,8 +112,14 @@ void Chess::readGame()
 }
 void Chess::displayHelp()
 {
-   cout << "Which piece would you like to find the moves for?";
-   
+	Position pos;
+	cout << "Which piece would you like to find the moves for?";
+	cin >> pos;
+	board[pos].setValidMoveList();
+	if (board[pos].getValidMoveList()[0] == '\0')
+		cout << "No Valid Moves\n";
+	else
+		cout << board[pos].getValidMoveList();
 }
 
 void Chess::makeMove()
