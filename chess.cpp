@@ -112,8 +112,14 @@ void Chess::readGame()
 }
 void Chess::displayHelp()
 {
-   cout << "Which piece would you like to find the moves for?";
-   
+	Position pos;
+	cout << "Which piece would you like to find the moves for?";
+	cin >> pos;
+	board[pos].setValidMoveList();
+	if (board[pos].getValidMoveList()[0] == '\0')
+		cout << "No Valid Moves\n";
+	else
+		cout << board[pos].getValidMoveList();
 }
 
 void Chess::makeMove()
@@ -122,7 +128,8 @@ void Chess::makeMove()
 	this->checkSameColor(); //check that the move piece matches the turn
 	if (getIsSameColor())
 	{
-		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination   
+		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
+		board[move1.getSrc()].setPos(move1.getDes());
 		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
 		this->setPrompt();
 		cout << board;
