@@ -26,10 +26,14 @@ struct Delta
    int dCol;
 };
 
-const Delta ADD_R = { 1,  0};
-const Delta ADD_C = { 0,  1};
-const Delta SUB_R = {-1,  0};
-const Delta SUB_C = { 0, -1};
+const Delta RIGHT = {0,1};
+const Delta UP = {1,0};
+const Delta LEFT = {0,-1};
+const Delta DOWN = {-1,0};
+const Delta UP_RIGHT = { 1, 1 };
+const Delta UP_LEFT = { 1, -1 };
+const Delta DOWN_RIGHT = { -1, 1 };
+const Delta DOWN_LEFT = { -1,  -1 };
 
 /***************************************************
  * POSITION
