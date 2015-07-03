@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <string>
 #include "move.h"
 #include "position.h"
 
@@ -53,9 +54,14 @@ public:
    Position getPos()         { return this->position; }
    virtual void setValidMoveList() { /*validMoveList = '\0';*/ };
    virtual void setPos(Position pos) { this->position = pos; };
+   //Position possibleMoveArray[0][0];
+   virtual bool validateMove(Position pos) {return false;};
+   virtual void getValidMoveList() {};
+   
    
 protected:
     Position position;
+    string validMovelist;
     bool moved;
     bool isWhite;
     void setMove(bool moved) {this->moved = moved;};
@@ -77,13 +83,45 @@ public:
 class King : public Piece
 {
 public:
+        Position possibleMoveArray[8][1];
 	King(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
 	{ };
 	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
+        
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+              for (int i = 0; i < 8; i++)
+        	{
+                    if (possibleMoveArray[i][0].isValid())
+                        if(pos == possibleMoveArray[i][0])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+        	}      
+            
+            return(valid);
+        }
+      
+        void getValidMoveList()
+        {
+         
+            
+              for (int i = 0; i < 8; i++)
+        	{
+                    if (possibleMoveArray[i][0].isValid())
+                        cout << possibleMoveArray[i][0] << endl;   
+                        
+        	}
+            
+         }
+        
 	void setValidMoveList()
 	{
-		Position possibleMoveArray[8][1];
+		
 		possibleMoveArray[0][0] = this->getPos() += RIGHT;
 		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
 		possibleMoveArray[2][0] = this->getPos() += UP;
@@ -99,6 +137,8 @@ public:
 			cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
 		}
 	}
+        
+
 };
 
 class Queen : public Piece
