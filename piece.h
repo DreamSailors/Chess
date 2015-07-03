@@ -44,8 +44,8 @@ public:
    bool getIsWhite() const                { return isWhite; }
    virtual char getLetter() const  = 0;
    virtual int getScore() const = 0;
-//  virtual char getLetter() const { return 0; }
-//   virtual int getScore() const { return PIECE_EMPTY; }
+//   virtual char getLetter() const { return 0; }
+ //  virtual int getScore() const = 0;		+   virtual int getScore() const { return PIECE_EMPTY; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
    Position getPos()         { return this->position; }
    
