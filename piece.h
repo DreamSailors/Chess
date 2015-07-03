@@ -148,15 +148,30 @@ class Pawn : public Piece
      virtual char getLetter() const  { return getIsWhite() ? 'p' : 'P';}
 	 void setValidMoveList()
 	 {
+		 int direction = 0;
+		 if (isWhite)
+			 direction = 1;
+		 else
+			 direction = -1;
+		 possibleMoveArray[0][0] = this->getPos() += {direction, 1};// Up and right
+		 possibleMoveArray[0][1] = this->getPos() += {direction, 0};//Up
+		 possibleMoveArray[0][2] = this->getPos() += {direction, -1};//Up and left
+		 possibleMoveArray[1][1].setInvalid();
+		 possibleMoveArray[1][2].setInvalid();
+		 if (!moved)
+		 {
+			 possibleMoveArray[1][0] = this->getPos() += {(direction * 2), 0};//move 2 spaces if first move
+		 }
+		 else
+			 possibleMoveArray[1][0].setInvalid();
+		 cout << "pos" << this->position << endl;
 		 for (int i = 0; i < 2; i++)
-			 //		 if (isWhite)
-			 //	 {
-			 //		 possibleMoveArray[0][0] = this->getPos() += {1, 1};// Up and right
-			 //		 possibleMoveArray[0][1]
-			 //	 }
-
-			 //	 else
-			 ;
+		 {
+			 for (int j = 0; j < 3; j++)
+				 cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
+			 cout << endl;
+		 }
+			 
 	 }
 };
 

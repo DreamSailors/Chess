@@ -47,8 +47,8 @@ void Board::setup()
    // the pawns
    for (int col = 0; col < 8; col++)
    {
-      board[1][col] = new Pawn  (true, 6, col  /*white*/);
-      board[6][col] = new Pawn  (false, 1, col /*black*/);      
+      board[1][col] = new Pawn  (true, 1, col  /*white*/);
+      board[6][col] = new Pawn  (false, 6, col /*black*/);      
    }
 
    // the spaces
