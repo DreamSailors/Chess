@@ -200,29 +200,19 @@ void Chess::makeMove()
 
 bool Chess::checkValidMove(Position pos, Move move)
 {
-   std::size_t xyz;
-   //string temp = move.getText();
-   string  temp = "d1d4";
-   string temp2 = "d7d6\nd1d5\ne2e3\nd1d4\n";
-  // board[pos].legalMoves = "";
-   //board[pos].setValidMoveList();
-   //xyz = board[pos].legalMoves.find(temp);
-     cout << temp2.find(temp);     
-//   cout<< "Temp: " << temp <<endl;
-//   cout << "XXX "<< board[pos].legalMoves << "xxx";
-   if(xyz > 0)
-   {
-      cout << "XXValid move " << xyz << "<-";
-            return true;
-   }
 
+   string temp = move.getText();
+   cout << endl;
+   cout << "Move" << temp << endl;
+   cout << "legalMoves" << board[pos].legalMoves << endl;
+ 
+   if (board[pos].legalMoves.find(temp) != std::string::npos) {
+      std::cout << "found!" << '\n';
+   }
    else
-    {
-      cout << "YYInvalid move " << xyz << "<-";
-            return false;
-   }
+      cout << "NOT FOUND\n";
 
-   
+  
 }
 
 void Chess::writeMoves(Move move)
