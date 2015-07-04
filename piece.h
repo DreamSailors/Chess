@@ -60,12 +60,13 @@ public:
    virtual void setValidMoveList() { /*validMoveList = '\0';*/ };
    virtual void setPos(Position pos) { this->position = pos; };
    string legalMoves;
+   void setMove(bool moved) {this->moved = moved;};
 
 protected:
     Position position;
     bool moved;
     bool isWhite;
-    void setMove(bool moved) {this->moved = moved;};
+    
 
 
 
@@ -215,35 +216,68 @@ class Pawn : public Piece
    public:
      Pawn(const bool isWhite, int row, int col) : Piece(isWhite,row,col)
       { };
-	 Position(possibleMoveArray[2][3]);
      virtual int getScore() const    { return getIsWhite() ? 1: -1;}
      virtual char getLetter() const  { return getIsWhite() ? 'p' : 'P';}
 	 void setValidMoveList()
 	 {
-		 int direction = 0;
-		 if (isWhite)
-			 direction = 1;
+		 int moveD;
+		 if (this->getIsWhite())
+			 moveD = 1;
 		 else
-			 direction = -1;
-		 possibleMoveArray[0][0] = this->getPos() += {direction, 1};// Up and right
-		 possibleMoveArray[0][1] = this->getPos() += {direction, 0};//Up
-		 possibleMoveArray[0][2] = this->getPos() += {direction, -1};//Up and left
-		 possibleMoveArray[1][1].setInvalid();
-		 possibleMoveArray[1][2].setInvalid();
-		 if (!moved)
+			 moveD = -1;
+		 cout <<"moveD= " << moveD;
+		 int moveDirection[3][2] =
 		 {
-			 possibleMoveArray[1][0] = this->getPos() += {(direction * 2), 0};//move 2 spaces if first move
-		 }
-		 else
-			 possibleMoveArray[1][0].setInvalid();
-		 cout << "pos" << this->position << endl;
-		 for (int i = 0; i < 2; i++)
+			 { 1, 1 }, //right
+			 { 1, 0 },//straight
+			 { 1, -1 },//left
+		 };
+		 int pieceRow = this->position.getRow();
+		 int pieceCol = this->position.getCol();
+		 Position posTemp;
+		 for (int inc = 0; inc < 3; inc++)//check for normal movement
 		 {
-			 for (int j = 0; j < 3; j++)
-				 cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
-			 cout << endl;
+			 cout << "for loop\n";
+			 int i = pieceRow;
+			 int j = pieceCol;
+			 i += (moveDirection[inc][0]) * moveD;//reverses direction for black pawns
+			 j += moveDirection[inc][1];
+			 posTemp.setRow(i);
+			 posTemp.setCol(j);
+			 if (posTemp.isValid())
+			 {
+				 if (moveDirection[inc][1] == 0 && boardLetters[i][j] == ' ')
+				 {
+					 legalMoves += this->position.getPosString();
+					 legalMoves += posTemp.getPosString();
+					 legalMoves += '\n';
+				 }
+				 if (moveDirection[inc][1] != 0 && boardLetters[i][j] != ' ') 
+				 {
+					if(!(!isupper(boardLetters[i][j]) && this->getIsWhite() ||
+					   isupper(boardLetters[i][j]) && !this->getIsWhite()))
+					 {
+						 legalMoves += this->position.getPosString();
+						 legalMoves += posTemp.getPosString();
+						 legalMoves += boardLetters[i][j];
+						 legalMoves += '\n';
+					 }
+				 }
+			 }
+			 posTemp.setValid();
 		 }
-	 }
+		 if (!this->moved)
+		 {
+			 if (boardLetters[pieceRow + moveD][pieceCol] == ' ' && boardLetters[pieceRow + 2 * moveD][pieceCol] == ' ');
+			 {
+				 posTemp.setRow(pieceRow + 2 * moveD);
+				 posTemp.setCol(pieceCol);
+				 legalMoves += this->position.getPosString();
+				 legalMoves += posTemp.getPosString();
+				 legalMoves += '\n';
+			 }
+		 }
+	}
 };
 
 class Rook : public Piece
