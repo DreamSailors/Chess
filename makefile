@@ -19,14 +19,8 @@
 #    pong:         The playable game
 #    uiTest:       Simple driver program for the drawing interface
 ###############################################################
-#a.out : chess.o chessdriver.o 
-#	g++ -o chess chess.o chessdriver.o
-#	tar -cf project3.tar *.cpp *.h makefile
-	
- #moveTest : piece.o position.o move.o board.o moveTest.o 
-#	g++ -o chess piece.o position.o move.o board.o moveTest.o
 
- chess : piece.o position.o move.o board.o chess.o
+ a.out : piece.o position.o move.o board.o chess.o
 	g++ -o chess piece.o position.o move.o board.o chess.o
 
 
