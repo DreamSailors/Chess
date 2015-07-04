@@ -21,12 +21,9 @@ public:
     bool getTest() const { return isTest; }
     Piece & operator [] (const Position & pos)
     {return *board[pos.getRow()][pos.getCol()];};
-
-    
     friend ostream & operator << (ostream & out, const Board & rhs);
     
 private:
-    
     bool isTest;
     bool isAllocated;
     Piece * board[8][8];
@@ -34,8 +31,6 @@ private:
     void display() const;
     void displayText() const;
     void displayFancy() const;
-    
-
 };
 
 #endif	/* BOARD_H */

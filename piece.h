@@ -53,8 +53,6 @@ public:
    {
 	   boardLetters[i][j] = letter;
    }
-   
-   //string getValidMoveList() { return validMoveList; }
    friend ostream & operator << (ostream & out, const Piece & rhs);
    Position getPos()         { return this->position; }
    virtual void setValidMoveList() { /*validMoveList = '\0';*/ };
@@ -158,13 +156,13 @@ class Queen : public Piece
 		  bool stop;
 		  int moveDirection[8][2] =
 		  {
-			  { 0, 1 }, //right
-			  { 1, 0 },//up
-			  { 1, 1 },//up-right
-			  { 1, -1 },//up-left
-			  { 0, -1 }, //left
+			  { 0, 1 },   //right
+			  { 1, 0 },   //up
+			  { 1, 1 },   //up-right
+			  { 1, -1 },  //up-left
+			  { 0, -1 },  //left
 			  { -1, -1 }, //down-left
-			  { -1, 0 }, //down
+			  { -1, 0 },  //down
 			  { -1, 1 }, //down-right
 			  
 		  };
@@ -206,9 +204,7 @@ class Queen : public Piece
 				  legalMoves += '\n';
 			  }
 		  }
-
 	}
-	  
 };
 
 class Pawn : public Piece
@@ -228,19 +224,19 @@ class Pawn : public Piece
 		 cout <<"moveD= " << moveD;
 		 int moveDirection[3][2] =
 		 {
-			 { 1, 1 }, //right
-			 { 1, 0 },//straight
-			 { 1, -1 },//left
+			 { 1, 1 },  //right
+			 { 1, 0 },  //straight
+			 { 1, -1 }, //left
 		 };
 		 int pieceRow = this->position.getRow();
 		 int pieceCol = this->position.getCol();
 		 Position posTemp;
-		 for (int inc = 0; inc < 3; inc++)//check for normal movement
+		 for (int inc = 0; inc < 3; inc++) //check for normal movement
 		 {
 			 cout << "for loop\n";
 			 int i = pieceRow;
 			 int j = pieceCol;
-			 i += (moveDirection[inc][0]) * moveD;//reverses direction for black pawns
+			 i += (moveDirection[inc][0]) * moveD; //reverses direction for black pawns
 			 j += moveDirection[inc][1];
 			 posTemp.setRow(i);
 			 posTemp.setCol(j);
@@ -293,37 +289,28 @@ public:
 			  bool stop;
 			  int moveDirection[4][2] =
 			  {
-				  { 0, 1 }, //right
-				  { 1, 0 },//up
+				  { 0, 1 },  //right
+				  { 1, 0 },  //up
 				  { 0, -1 }, //left
 				  { -1, 0 }, //down
-
 			  };
-
-
 			  int pieceRow = this->position.getRow();
 			  int pieceCol = this->position.getCol();
 			  Position posTemp;
-			  int f = 0;
 			  for (int inc = 0; inc < 4; inc++)
 			  {
 				  stop = false;
 				  int i = pieceRow;
 				  int j = pieceCol;
-
 				  while (!stop)
 				  {
-
-					  cout << f << endl;
 					  cout << i << "," << j << "," << stop << endl;
-					  f++;
 					  i += moveDirection[inc][0];
 					  j += moveDirection[inc][1];
 					  posTemp.setRow(i);
 					  posTemp.setCol(j);
 					  if (posTemp.isInvalid())
 					  {
-						  cout << "invalid\n";
 						  stop = true;
 						  posTemp.setValid();
 						  break;
@@ -341,9 +328,7 @@ public:
 						  legalMoves += boardLetters[i][j];
 					  legalMoves += '\n';
 				  }
-				  cout << "while";
 			  }
-
 	  }
 };
 
@@ -360,25 +345,23 @@ public:
 		bool stop;
 		int moveDirection[8][2] =
 		{
-			{ 1,2 }, //up 1 right 2
-			{ 2,1 },//up 2 right 1
-			{ 1,-2 },//up 1 left 2
-			{ 2,-1 },//up 2 left 1
-			{ -1, 2 }, //down 1 right 2
-			{ -2, 1 }, //down 2 right 1
-			{ -1, -2}, //down 1 left 2
+			{ 1,2 },    //up 1 right 2
+			{ 2,1 },    //up 2 right 1
+			{ 1,-2 },   //up 1 left 2
+			{ 2,-1 },   //up 2 left 1
+			{ -1, 2 },  //down 1 right 2
+			{ -2, 1 },  //down 2 right 1
+			{ -1, -2},  //down 1 left 2
 			{ -2, -1 }, //down 2 left 1
 		};
 		int pieceRow = this->position.getRow();
 		int pieceCol = this->position.getCol();
 		Position posTemp;
-		int f = 0;
 		for (int inc = 0; inc < 8; inc++)
 		{
 			stop = false;
 			int i = pieceRow;
 			int j = pieceCol;
-
 			i += moveDirection[inc][0];
 			j += moveDirection[inc][1];
 			posTemp.setRow(i);
@@ -407,7 +390,6 @@ public:
 		}
 	}
 };
-		 
 
 class Bishop : public Piece
 {
@@ -422,37 +404,27 @@ class Bishop : public Piece
 		 bool stop;
 		 int moveDirection[4][2] =
 		 {
-			 { 1, 1 },//up-right
-			 { 1, -1 },//up-left
+			 { 1, 1 },   //up-right
+			 { 1, -1 },  //up-left
 			 { -1, -1 }, //down-left
-			 { -1, 1 }, //down-right
-
+			 { -1, 1 },  //down-right
 		 };
-
-
 		 int pieceRow = this->position.getRow();
 		 int pieceCol = this->position.getCol();
 		 Position posTemp;
-		 int f = 0;
 		 for (int inc = 0; inc < 4; inc++)
 		 {
 			 stop = false;
 			 int i = pieceRow;
 			 int j = pieceCol;
-
 			 while (!stop)
 			 {
-
-				 cout << f << endl;
-				 cout << i << "," << j << "," << stop << endl;
-				 f++;
 				 i += moveDirection[inc][0];
 				 j += moveDirection[inc][1];
 				 posTemp.setRow(i);
 				 posTemp.setCol(j);
 				 if (posTemp.isInvalid())
 				 {
-					 cout << "invalid\n";
 					 stop = true;
 					 posTemp.setValid();
 					 break;
@@ -470,9 +442,7 @@ class Bishop : public Piece
 					 legalMoves += boardLetters[i][j];
 				 legalMoves += '\n';
 			 }
-			 cout << "while";
 		 }
-
 	 }
 };
 
