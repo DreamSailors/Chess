@@ -90,70 +90,64 @@ public:
 	Position possibleMoveArray[8][1];
 	virtual int getScore() const    { return getIsWhite() ? 1000 : -1000; }
 	virtual char getLetter() const  { return getIsWhite() ? 'k' : 'K'; }
-        
-        bool validateMove(Position pos)
-        {
-            bool valid = false;
-            
-              for (int i = 0; i < 8; i++)
-        	{
-                    if (possibleMoveArray[i][0].isValid())
-                        if(pos == possibleMoveArray[i][0])
-                        {
-                            valid = true;
-                            break;
-                        }                    
-        	}      
-            
-            return(valid);
-        }
-      
-        void getValidMoveList()
-        {
-         
-            
-              for (int i = 0; i < 8; i++)
-        	{
-                    if (possibleMoveArray[i][0].isValid())
-                        cout << possibleMoveArray[i][0] << endl;   
-                        
-        	}
-            
-         }
-        
-	void setValidMoveList()
-	{
-		possibleMoveArray[0][0] = this->getPos() += RIGHT;
-		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
-		possibleMoveArray[2][0] = this->getPos() += UP;
-		possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
-		possibleMoveArray[4][0] = this->getPos() += LEFT;
-		possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
-		possibleMoveArray[6][0] = this->getPos() += DOWN;
-		possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
-
-		cout << this->getPos();
-		for (int i = 0; i < 8; i++)
-		{
-			cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
-		}
-	}
-};
+        bool validateMove(Position pos);
+        void getValidMoveList();
+        void setValidMoveList();
+ };
 
 class Queen : public Piece
 {
    public:
       Queen(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
       { };
-	  Position possibleMoveArray[7][7];
+
+      Position possibleMoveArray[7][7];
       virtual int getScore() const    { return getIsWhite() ? 9: -9;}
       virtual char getLetter() const  { return getIsWhite() ? 'q' : 'Q';}
-	  void setValidMoveList()
+      
+   /**************************************************************
+    * ValidateMove
+    *    Given a piece location determines if it is a valid move
+    *************************************************************/
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+		for (int i = 0; i < 8; i++)
+                    for (int j = 0; j < 7; j++)
+                    if (possibleMoveArray[i][j].isValid())
+                        if(pos == possibleMoveArray[i][j])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+            
+            return(valid);
+        }
+ 
+    /**************************************************************
+    * getValidMoveList
+    * Given a piece location displays all valid moves
+    *************************************************************/
+        void getValidMoveList()
+        {  
+		  for (int i = 0; i < 8; i++)
+                     for (int j = 0; j < 7; j++)
+                        if (possibleMoveArray[i][j].isValid())
+                            cout << possibleMoveArray[i][j] << endl;   
+                                   
+         }
+ 
+    /**************************************************************
+    * setValidMoveList
+    * Given a piece location displays all possible moves
+    *************************************************************/
+      void setValidMoveList()
 	  {
 #ifdef MAC
 
 		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[0][i] = this->getPos() += (Delta){0, 1 + 1};//RIGHT
+			  possibleMoveArray[0][i] = this->getPos() += (Delta){0, i + 1};//RIGHT
 		  for (int i = 0; i < 7; i++)
 			  possibleMoveArray[1][i] = this->getPos() += (Delta){i + 1, i + 1};//UP and RIGHT
 		  for (int i = 0; i < 7; i++)
@@ -204,17 +198,85 @@ class Pawn : public Piece
 	 Position(possibleMoveArray[2][3]);
      virtual int getScore() const    { return getIsWhite() ? 1: -1;}
      virtual char getLetter() const  { return getIsWhite() ? 'p' : 'P';}
+     
+     /**************************************************************
+    * ValidateMove
+    * Given a piece location determines if it is a valid move
+    *************************************************************/
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+		for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 3; j++)
+                    if (possibleMoveArray[i][j].isValid())
+                        if(pos == possibleMoveArray[i][j])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+            
+            return(valid);
+        }
+ 
+    /**************************************************************
+    * getValidMoveList
+    * Given a piece location displays all valid moves
+    *************************************************************/
+        void getValidMoveList()
+        {  
+		  for (int i = 0; i < 2; i++)
+                     for (int j = 0; j < 3; j++)
+                        if (possibleMoveArray[i][j].isValid())
+                            cout << possibleMoveArray[i][j] << endl;   
+                                   
+         }
+ 
+    /**************************************************************
+    * setValidMoveList
+    * Given a piece location displays all possible moves
+    *************************************************************/
 	 void setValidMoveList()
 	 {
-		 for (int i = 0; i < 2; i++)
-			 //		 if (isWhite)
-			 //	 {
-			 //		 possibleMoveArray[0][0] = this->getPos() += {1, 1};// Up and right
-			 //		 possibleMoveArray[0][1]
-			 //	 }
+		 int direction = 0;
+		 if (isWhite)
+			 direction = 1;
+		 else
+			 direction = -1;
+#ifdef MAC
+		 possibleMoveArray[0][0] = this->getPos() += (Delta){direction, 1};// Up and right
+		 possibleMoveArray[0][1] = this->getPos() += (Delta){direction, 0};//Up
+		 possibleMoveArray[0][2] = this->getPos() += (Delta){direction, -1};//Up and left
+		 possibleMoveArray[1][1].setInvalid();
+		 possibleMoveArray[1][2].setInvalid();
+		 if (!moved)
+		 {
+			 possibleMoveArray[1][0] = this->getPos() += (Delta){(direction * 2), 0};//move 2 spaces if first move
+		 }
+		 else
+			 possibleMoveArray[1][0].setInvalid();                 
+#else
+ 		 possibleMoveArray[0][0] = this->getPos() += {direction, 1};// Up and right
+		 possibleMoveArray[0][1] = this->getPos() += {direction, 0};//Up
+		 possibleMoveArray[0][2] = this->getPos() += {direction, -1};//Up and left
+		 possibleMoveArray[1][1].setInvalid();
+		 possibleMoveArray[1][2].setInvalid();
+		 if (!moved)
+		 {
+			 possibleMoveArray[1][0] = this->getPos() += {(direction * 2), 0};//move 2 spaces if first move
+		 }
+		 else
+			 possibleMoveArray[1][0].setInvalid();                
+#endif
 
-			 //	 else
-			 ;
+		 cout << "pos" << this->position << endl;
+		 for (int i = 0; i < 2; i++)
+		 {
+			 for (int j = 0; j < 3; j++)
+				 cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
+			 cout << endl;
+		 }
+			 
 	 }
 };
 
@@ -226,6 +288,44 @@ public:
 	  Position possibleMoveArray[3][7];
       virtual int getScore() const    { return getIsWhite() ? 5: -5;}
       virtual char getLetter() const  { return getIsWhite() ? 'r' : 'R';}
+      
+   /**************************************************************
+    * ValidateMove
+    * Given a piece location determines if it is a valid move
+    *************************************************************/
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+		for (int i = 0; i < 4; i++)		 
+                    for (int j = 0; j < 7; j ++)
+                    if (possibleMoveArray[i][j].isValid())
+                        if(pos == possibleMoveArray[i][j])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+            
+            return(valid);
+        }
+ 
+    /**************************************************************
+    * getValidMoveList
+    * Given a piece location displays all valid moves
+    *************************************************************/
+        void getValidMoveList()
+        {  
+		for (int i = 0; i < 4; i++)		 
+                    for (int j = 0; j < 7; j ++)
+                        if (possibleMoveArray[i][j].isValid())
+                            cout << possibleMoveArray[i][j] << endl;   
+                               	           
+         }
+ 
+    /**************************************************************
+    * setValidMoveList
+    * Given a piece location displays all possible moves
+    *************************************************************/      
 	  void setValidMoveList()
 	  {
 #ifdef MAC             
@@ -265,6 +365,42 @@ class Knight : public Piece
 	  Position possibleMoveArray[8][1];
       virtual int getScore() const    { return getIsWhite() ? 3: -3;}
       virtual char getLetter() const  { return getIsWhite() ? 'n' : 'N';}
+      
+        /**************************************************************
+    * ValidateMove
+    * Given a piece location determines if it is a valid move
+    *************************************************************/
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+            for (int i = 0; i < 7; i++)
+                if (possibleMoveArray[i][0].isValid())
+                    if(pos == possibleMoveArray[i][0])
+                    {
+                        valid = true;
+                        break;
+                    }                    
+
+            return(valid);
+        }
+ 
+    /**************************************************************
+    * getValidMoveList
+    * Given a piece location displays all valid moves
+    *************************************************************/
+        void getValidMoveList()
+        {  
+            for (int i = 0; i < 7; i++)
+                if (possibleMoveArray[i][0].isValid())
+                    cout << possibleMoveArray[i][0] << endl;   
+                               	           
+         }
+ 
+    /**************************************************************
+    * setValidMoveList
+    * Given a piece location displays all possible moves
+    *************************************************************/      
 	  void setValidMoveList()
 	  {
 #ifdef MAC
@@ -305,6 +441,43 @@ class Bishop : public Piece
 	 Position possibleMoveArray[3][7];
      virtual int getScore() const    { return getIsWhite() ? 3: -3;}
      virtual char getLetter() const  { return getIsWhite() ? 'b' : 'B';}
+     /**************************************************************
+    * ValidateMove
+    * Given a piece location determines if it is a valid move
+    *************************************************************/
+        bool validateMove(Position pos)
+        {
+            bool valid = false;
+            
+		for (int i = 0; i < 4; i++)		 
+                    for (int j = 0; j < 7; j ++)
+                    if (possibleMoveArray[i][j].isValid())
+                        if(pos == possibleMoveArray[i][j])
+                        {
+                            valid = true;
+                            break;
+                        }                    
+            
+            return(valid);
+        }
+ 
+    /**************************************************************
+    * getValidMoveList
+    * Given a piece location displays all valid moves
+    *************************************************************/
+        void getValidMoveList()
+        {  
+		for (int i = 0; i < 4; i++)		 
+                    for (int j = 0; j < 7; j ++)
+                        if (possibleMoveArray[i][j].isValid())
+                            cout << possibleMoveArray[i][j] << endl;   
+                               	           
+         }
+ 
+    /**************************************************************
+    * setValidMoveList
+    * Given a piece location displays all possible moves
+    *************************************************************/      
 	 void setValidMoveList()
 	 {
 #ifdef MAC

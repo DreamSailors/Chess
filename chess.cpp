@@ -18,8 +18,8 @@
 using namespace std;
 
 Chess::Chess() : playerPrompt(WHITEPLAYER) { setQuitGame(false); }
-Chess::Chess(const Chess& orig) { }
-Chess::~Chess() { }
+Chess::Chess(const Chess & orig) { }
+Chess::~Chess() {}
 
 Board board;
 Move move1;
@@ -28,14 +28,14 @@ Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
 void Chess::getUserInput()
 {
 
-   cout << getPrompt() << " ";
+   cout << getPlayerPrompt() << " ";
    cin >> userInput;
   
 }
 
 void Chess::pickMenuOption()
 {
-   string x = userInput;
+   string x = userInput;  //make variable shorter
    
    if ( x == "quit" || x == "Quit" || x == "QUIT")
       menuOption = QUIT;
@@ -49,10 +49,13 @@ void Chess::pickMenuOption()
       menuOption = TEST;
    else if (x == "rank" || x == "Rank" || x == "RANK")
       menuOption = RANK;
-   else
+   else if(x.size() >= 4)
    {
+      cout << "xxx";
       menuOption = MOVE;
    }
+   else
+      menuOption = UNKNOWN;
 }
 
 
@@ -61,30 +64,43 @@ void Chess::processInput()
    switch(menuOption)
    {
       case QUIT:
-		  this->leaveGame();
-		  break;
+	this->leaveGame();
+	break;
       case QUESTION:
          this->displayMenu();
          break;
       case TEST:
-		 this->boardFlip();
+         this->boardFlip();
          break;  
-	  case READ:
-		  break;
-	  case HELP:
-		  this->displayHelp();
-		  break;
-	  case MOVE:
-		  this->makeMove();
-      //default:
-         //cout << "invalid entry, please try again\n";
+      case READ:
+	break;
+      case HELP:
+	this->displayHelp();
+	break;
+      case MOVE:
+	this->makeMove();
+        break;
+      default:
+         if()
+         cout << "invalid entry, please try again\n";
    }
 }
 
 void Chess::leaveGame()
 {
-	cout << "save?"; //save file stuff goes here
-	setQuitGame(true);
+   char fileName[256];
+   char line[25];  
+  
+   cin.getline( line, 25, '\n' );
+   cout << "To save a game, please specify the filename.\n";
+   cout << "    To quit without saving a file, just press <enter>\n";
+
+   cin.getline( fileName, 256);
+  
+   ofstream out(fileName);
+   out << allMoves;
+   out.close();
+   setQuitGame(true);
 }
 
 
@@ -132,17 +148,30 @@ void Chess::makeMove()
            board[move1.getSrc()].setValidMoveList();
            if(board[move1.getSrc()].validateMove(move1.getDes()))
            {
-		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
-		board[move1.getSrc()].setPos(move1.getDes());
-		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
-		this->setPrompt();
+              //how do we check for other piece
+               writeMoves(move1);
+               board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
+               board[move1.getSrc()].setPos(move1.getDes());
+               board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
+               this->setPrompt();
+                                      
 		cout << board;
+
            }
            else
-              cout << "mistake";
+              cout << "Can't move here";
 	}
 	else
-		cout << "Wait your turn!\n";
+            cout << "Wait your turn!\n";
+}
+
+void Chess::writeMoves(Move move)
+{
+   allMoves += move.getText();
+   if(playerPrompt == WHITEPLAYER)
+      allMoves += " ";
+   else
+      allMoves += "\n";
 }
 
 void Chess::checkSameColor()
@@ -163,6 +192,7 @@ void Chess::setPrompt()
    
  
 }
+
 
 ostream & operator << (ostream & out,  Chess & rhs) 
 {
@@ -189,6 +219,8 @@ int main()
 	   
 	   cout << game;
    }
+   
 
+   
    return 0;
 }
