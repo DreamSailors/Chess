@@ -14,6 +14,8 @@
 
 
 #include "chess.h"
+#include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -22,9 +24,23 @@ Chess::Chess(const Chess& orig) { }
 Chess::~Chess() { }
 
 Board board;
+char boardLetter[8][8];
 Move move1;
 Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
+string MoveList;
 
+void Chess::setBoardLetter(Position pos1)
+{
+
+	for (int i = 7; i >= 0; i--)
+		for (int j = 0; j < 8; j++)
+		{
+			Position posTemp;
+			posTemp.set(i, j);
+			board[pos1].setBoardLetters(i, j, board[posTemp].getLetter());
+			//boardLetter[i][j] = board[posTemp].getLetter();
+		}
+}
 void Chess::getUserInput()
 {
 
@@ -70,6 +86,7 @@ void Chess::processInput()
 		 this->boardFlip();
          break;  
 	  case READ:
+		  this->readGame();
 		  break;
 	  case HELP:
 		  this->displayHelp();
@@ -108,14 +125,37 @@ void Chess::boardFlip() //changes board to and from test mode
 
 void Chess::readGame()
 {
-	;
+	Move readMove;
+	string temp;
+	string tempMove;
+	char fileName[256];
+	cout << "Filename: ";
+	cin >> fileName;
+
+	ifstream fin(fileName);
+	if (fin.fail())
+	{
+		cout << "Unable to open file";
+		return;
+	}
+	while (fin>>temp)
+	{
+		readMove = temp;
+		board.makeMove(readMove.getDes(), board[readMove.getSrc()]);  //put pieces from source into destination 
+		board[readMove.getSrc()].setPos(readMove.getDes());
+		board.makeMove(readMove.getSrc(), emptyPiece); // put empty piece where the moving piece came
+	}
+	cout << board;
 }
 void Chess::displayHelp()
 {
 	Position pos;
 	cout << "Which piece would you like to find the moves for?";
 	cin >> pos;
+	setBoardLetter(pos);
+	board[pos].legalMoves = "";
 	board[pos].setValidMoveList();
+	cout << ".." << board[pos].legalMoves;
 	//if (board[pos].getValidMoveList()[0] == '\0')
 	//	cout << "No Valid Moves\n";
 	//else
@@ -146,15 +186,15 @@ void Chess::checkSameColor()
 	else
 		setIsSameColor(false);
 }
-void Chess::setPrompt() 
+
+void Chess::setPrompt()
 {
-        
-   if(playerPrompt == WHITEPLAYER)
-      playerPrompt = BLACKPLAYER;
-   else
-      playerPrompt = WHITEPLAYER;
-   
- 
+
+	if (playerPrompt == WHITEPLAYER)
+		playerPrompt = BLACKPLAYER;
+	else
+		playerPrompt = WHITEPLAYER;
+
 }
 
 ostream & operator << (ostream & out,  Chess & rhs) 

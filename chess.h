@@ -89,6 +89,7 @@ private:
     void    readGame();
     void    makeMove();
     void    checkSameColor();
+	void	setBoardLetter(Position pos1);
     void    setQuitGame(bool quit)          { quitGame = quit; }
     void    setIsSameColor(bool setColor)   { isSameColor = setColor; }
     int     getMenuOption()                 { return menuOption; }

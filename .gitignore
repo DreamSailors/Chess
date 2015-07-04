@@ -31,4 +31,5 @@
 *.vcxproj
 *.vcxproj.filters
 *.cd
+*.opensdf
 /chess
