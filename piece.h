@@ -127,7 +127,7 @@ public:
 					{
 						legalMoves += this->position.getPosString();
 						legalMoves += posTemp.getPosString();
-						legalMoves += boardLetters[i][j];
+						legalMoves += tolower(boardLetters[i][j]);
 						legalMoves += '\n';
 					}
 				}
@@ -200,7 +200,7 @@ class Queen : public Piece
 				  legalMoves += this->position.getPosString();
 				  legalMoves += posTemp.getPosString();
 				  if (stop)
-					  legalMoves += boardLetters[i][j];
+					  legalMoves += tolower(boardLetters[i][j]);
 				  legalMoves += '\n';
 			  }
 		  }
@@ -221,7 +221,6 @@ class Pawn : public Piece
 			 moveD = 1;
 		 else
 			 moveD = -1;
-		 cout <<"moveD= " << moveD;
 		 int moveDirection[3][2] =
 		 {
 			 { 1, 1 },  //right
@@ -233,7 +232,6 @@ class Pawn : public Piece
 		 Position posTemp;
 		 for (int inc = 0; inc < 3; inc++) //check for normal movement
 		 {
-			 cout << "for loop\n";
 			 int i = pieceRow;
 			 int j = pieceCol;
 			 i += (moveDirection[inc][0]) * moveD; //reverses direction for black pawns
@@ -255,7 +253,7 @@ class Pawn : public Piece
 					 {
 						 legalMoves += this->position.getPosString();
 						 legalMoves += posTemp.getPosString();
-						 legalMoves += boardLetters[i][j];
+						 legalMoves += tolower(boardLetters[i][j]);
 						 legalMoves += '\n';
 					 }
 				 }
@@ -304,7 +302,7 @@ public:
 				  int j = pieceCol;
 				  while (!stop)
 				  {
-					  cout << i << "," << j << "," << stop << endl;
+					
 					  i += moveDirection[inc][0];
 					  j += moveDirection[inc][1];
 					  posTemp.setRow(i);
@@ -325,7 +323,7 @@ public:
 					  legalMoves += this->position.getPosString();
 					  legalMoves += posTemp.getPosString();
 					  if (stop)
-						  legalMoves += boardLetters[i][j];
+						  legalMoves += tolower(boardLetters[i][j]);
 					  legalMoves += '\n';
 				  }
 			  }
@@ -375,7 +373,7 @@ public:
 					{
 						legalMoves += this->position.getPosString();
 						legalMoves += posTemp.getPosString();
-						legalMoves += boardLetters[i][j];
+						legalMoves += tolower(boardLetters[i][j]);
 						legalMoves += '\n';
 					}
 				}
@@ -439,7 +437,7 @@ class Bishop : public Piece
 				 legalMoves += this->position.getPosString();
 				 legalMoves += posTemp.getPosString();
 				 if (stop)
-					 legalMoves += boardLetters[i][j];
+					 legalMoves += tolower(boardLetters[i][j]);
 				 legalMoves += '\n';
 			 }
 		 }

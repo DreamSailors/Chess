@@ -78,7 +78,7 @@ void Board::setup()
  *************************************************************/
 void Board::displayText() const
 {
-	cout << "0,0" << *board[0][0] << endl;
+
    cout << "   abcdefgh\n";
    // display the board
    for (int row = 7; row >= 0; row--)

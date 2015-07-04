@@ -173,44 +173,65 @@ void Chess::displayHelp()
 
 void Chess::makeMove()
 {
-   Position pos;
+    try
+      {
+         Position pos;
+ 
          move1 = userInput;
-           
+            
 	this->checkSameColor(); //check that the move piece matches the turn
 	if (getIsSameColor())
 	{
-           board[move1.getSrc()].legalMoves = "";
-           board[move1.getSrc()].setValidMoveList();
-       
+           //board[move1.getSrc()].legalMoves = "";
+          //    board[move1.getSrc()].setValidMoveList();
+      
            if(checkValidMove(board[move1.getSrc()].getPos(),move1))
-              cout << "Valid";
-              
+           {
+             
+             
 		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
 		board[move1.getSrc()].setPos(move1.getDes());
 		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
 		writeMoves(move1);
                 //board[move1.getSrc()].setMoved();
                 this->setPrompt();
-		cout << board;
-                cout << board[move1.getSrc()].legalMoves;
+                
+               cout << board;
+             
+    
+
+           }
+           else
+              cout << "Not a valid Move!";
 	}
 	else
 		cout << "Wait your turn!\n";
+         }
+         catch (string sError)
+         {
+                    
+                     cout << sError << endl;
+         }
 }
 
 bool Chess::checkValidMove(Position pos, Move move)
 {
 
-   string temp = move.getText();
-   cout << endl;
-   cout << "Move" << temp << endl;
-   cout << "legalMoves" << board[pos].legalMoves << endl;
- 
-   if (board[pos].legalMoves.find(temp) != std::string::npos) {
-      std::cout << "found!" << '\n';
+   string temp = move.getText() + "\n";
+   setBoardLetter(pos);
+   board[pos].legalMoves = "";
+   board[pos].setValidMoveList();
+
+   if (board[pos].legalMoves.find(temp) != std::string::npos) 
+   {
+
+      return true;
    }
    else
-      cout << "NOT FOUND\n";
+   {
+
+      return false;
+   }
 
   
 }
