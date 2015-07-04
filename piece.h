@@ -343,21 +343,7 @@ public:
 				  }
 				  cout << "while";
 			  }
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[0][i] = this->getPos() += {0, i +1};//RIGHT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[1][i] = this->getPos() += {i + 1, 0}; //UP
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[2][i] = this->getPos() += {0, -i - 1}; // LEFT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[3][i] = this->getPos() += {-i - 1, 0}; //DOWN
 
-		  for (int i = 0; i < 4; i++)
-		  {
-			  for (int j = 0; j < 7; j ++)
-			  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
-			  cout << endl;
-		  }
 	  }
 };
 
@@ -486,22 +472,7 @@ class Bishop : public Piece
 			 }
 			 cout << "while";
 		 }
-	 
-		 for (int i = 0; i < 7; i++)
-			 possibleMoveArray[0][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
-		 for (int i = 0; i < 7; i++)
-			 possibleMoveArray[1][i] = this->getPos() += {i + 1, -i - 1}; //UP and LEFT
-		 for (int i = 0; i < 7; i++)
-			 possibleMoveArray[2][i] = this->getPos() += {-i - 1, -i - 1};//DOWN and LEFT
-		 for (int i = 0; i < 7; i++)
-			 possibleMoveArray[3][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
 
-		 for (int i = 0; i < 4; i++)
-		 {
-			 for (int j = 0; j < 7; j++)
-				 cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
-			 cout << endl;
-		 }
 	 }
 };
 

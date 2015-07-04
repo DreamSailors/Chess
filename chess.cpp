@@ -28,6 +28,7 @@ char boardLetter[8][8];
 Move move1;
 Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
 string MoveList;
+string allMoves;
 
 void Chess::setBoardLetter(Position pos1)
 {
@@ -77,8 +78,8 @@ void Chess::processInput()
    switch(menuOption)
    {
       case QUIT:
-		  this->leaveGame();
-		  break;
+         this->leaveGame();      
+         break;
       case QUESTION:
          this->displayMenu();
          break;
@@ -97,11 +98,21 @@ void Chess::processInput()
          //cout << "invalid entry, please try again\n";
    }
 }
-
 void Chess::leaveGame()
 {
-	cout << "save?"; //save file stuff goes here
-	setQuitGame(true);
+   char fileName[256];
+   char line[25];  
+  
+   cin.getline( line, 25, '\n' );
+   cout << "To save a game, please specify the filename.\n";
+   cout << "    To quit without saving a file, just press <enter>\n";
+
+   cin.getline( fileName, 256);
+  
+   ofstream out(fileName);
+   out << allMoves;
+   out.close();
+   setQuitGame(true);
 }
 
 
@@ -155,27 +166,72 @@ void Chess::displayHelp()
 	setBoardLetter(pos);
 	board[pos].legalMoves = "";
 	board[pos].setValidMoveList();
-	cout << ".." << board[pos].legalMoves;
-	//if (board[pos].getValidMoveList()[0] == '\0')
-	//	cout << "No Valid Moves\n";
-	//else
-	//	cout << board[pos].getValidMoveList();
+	cout << "Possible moves are:\n" << board[pos].legalMoves;
+
 }
+
 
 void Chess::makeMove()
 {
-	move1 = userInput;
+   Position pos;
+         move1 = userInput;
+           
 	this->checkSameColor(); //check that the move piece matches the turn
 	if (getIsSameColor())
 	{
+           board[move1.getSrc()].legalMoves = "";
+           board[move1.getSrc()].setValidMoveList();
+       
+           if(checkValidMove(board[move1.getSrc()].getPos(),move1))
+              cout << "Valid";
+              
 		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
 		board[move1.getSrc()].setPos(move1.getDes());
 		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
-		this->setPrompt();
+		writeMoves(move1);
+                //board[move1.getSrc()].setMoved();
+                this->setPrompt();
 		cout << board;
+                cout << board[move1.getSrc()].legalMoves;
 	}
 	else
 		cout << "Wait your turn!\n";
+}
+
+bool Chess::checkValidMove(Position pos, Move move)
+{
+   std::size_t xyz;
+   //string temp = move.getText();
+   string  temp = "d1d4";
+   string temp2 = "d7d6\nd1d5\ne2e3\nd1d4\n";
+  // board[pos].legalMoves = "";
+   //board[pos].setValidMoveList();
+   //xyz = board[pos].legalMoves.find(temp);
+     cout << temp2.find(temp);     
+//   cout<< "Temp: " << temp <<endl;
+//   cout << "XXX "<< board[pos].legalMoves << "xxx";
+   if(xyz > 0)
+   {
+      cout << "XXValid move " << xyz << "<-";
+            return true;
+   }
+
+   else
+    {
+      cout << "YYInvalid move " << xyz << "<-";
+            return false;
+   }
+
+   
+}
+
+void Chess::writeMoves(Move move)
+{
+   allMoves += move.getText();
+   if(playerPrompt == WHITEPLAYER)
+      allMoves += " ";
+   else
+      allMoves += "\n";
 }
 
 void Chess::checkSameColor()
