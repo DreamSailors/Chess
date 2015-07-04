@@ -54,11 +54,15 @@ bool King::validateMove(Position pos)
 void King::getValidMoveList()
 {
 
-
+   cout << "Possible moves are:\n" ;
      for (int i = 0; i < 8; i++)
        {
            if (possibleMoveArray[i][0].isValid())
-               cout << possibleMoveArray[i][0] << endl;   
+           {
+              
+              cout << "\t"<< this->getPos()  << possibleMoveArray[i][0] << endl; 
+           }
+               
 
        }
 
@@ -79,11 +83,13 @@ void King::getValidMoveList()
           possibleMoveArray[6][0] = this->getPos() += DOWN;
           possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
 
+#ifdef DEBUG          
           cout << this->getPos();
           for (int i = 0; i < 8; i++)
           {
                   cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
           }
+#endif
   }
 
 

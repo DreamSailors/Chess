@@ -35,7 +35,7 @@ void Chess::getUserInput()
 
 void Chess::pickMenuOption()
 {
-   string x = userInput;
+   string x = userInput;  //make variable shorter
    
    if ( x == "quit" || x == "Quit" || x == "QUIT")
       menuOption = QUIT;
@@ -51,6 +51,7 @@ void Chess::pickMenuOption()
       menuOption = RANK;
    else if(x.size() >= 4)
    {
+      cout << "xxx";
       menuOption = MOVE;
    }
    else
@@ -80,6 +81,7 @@ void Chess::processInput()
 	this->makeMove();
         break;
       default:
+         if()
          cout << "invalid entry, please try again\n";
    }
 }
@@ -160,7 +162,7 @@ void Chess::makeMove()
               cout << "Can't move here";
 	}
 	else
-		cout << "Wait your turn!\n";
+            cout << "Wait your turn!\n";
 }
 
 void Chess::writeMoves(Move move)
