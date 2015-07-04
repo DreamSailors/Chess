@@ -105,8 +105,6 @@ public:
 			{ -1, 1 }, //down-right
 
 		};
-
-
 		int pieceRow = this->position.getRow();
 		int pieceCol = this->position.getCol();
 		Position posTemp;
@@ -121,45 +119,28 @@ public:
 			j += moveDirection[inc][1];
 			posTemp.setRow(i);
 			posTemp.setCol(j);
-			if (posTemp.isInvalid())
+			if (posTemp.isValid())
 			{
-				cout << "invalid\n";
-				stop = true;
-				posTemp.setValid();
-				break;
+				if (boardLetters[i][j] != ' ')
+				{
+					if (!(!isupper(boardLetters[i][j]) && this->getIsWhite() ||
+						isupper(boardLetters[i][j]) && !this->getIsWhite()))
+					{
+						legalMoves += this->position.getPosString();
+						legalMoves += posTemp.getPosString();
+						legalMoves += boardLetters[i][j];
+						legalMoves += '\n';
+					}
+				}
+				else
+				{
+					legalMoves += this->position.getPosString();
+					legalMoves += posTemp.getPosString();
+					legalMoves += '\n';
+				}
 			}
-			if (boardLetters[i][j] != ' ')
-			{
-				stop = true;
-				if (!isupper(boardLetters[i][j]) && this->getIsWhite() ||
-					isupper(boardLetters[i][j]) && !this->getIsWhite())
-					break;
-			}
-			legalMoves += this->position.getPosString();
-			legalMoves += posTemp.getPosString();
-			if (stop)
-				legalMoves += boardLetters[i][j];
-			legalMoves += '\n';
 		}
-		cout << "while";
 	}
-	/*
-		possibleMoveArray[0][0] = this->getPos() += RIGHT;
-		possibleMoveArray[1][0] = this->getPos() += UP_RIGHT;
-		possibleMoveArray[2][0] = this->getPos() += UP;
-		possibleMoveArray[3][0] = this->getPos() += UP_LEFT;
-		possibleMoveArray[4][0] = this->getPos() += LEFT;
-		possibleMoveArray[5][0] = this->getPos() += DOWN_LEFT;
-		possibleMoveArray[6][0] = this->getPos() += DOWN;
-		possibleMoveArray[7][0] = this->getPos() += DOWN_RIGHT;
-		
-		cout << this->getPos();
-		for (int i = 0; i < 8; i++)
-		{
-			cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
-		}
-	}*/
-
 };
 
 class Queen : public Piece
@@ -200,17 +181,12 @@ class Queen : public Piece
 			 
 			 while (!stop)
 			  {
-
-				  cout << f << endl;
-				  cout << i << "," << j << "," << stop << endl;
-			      f++;
 				  i += moveDirection[inc][0];
 				  j += moveDirection[inc][1];
 				  posTemp.setRow(i);
 				  posTemp.setCol(j);
 				  if (posTemp.isInvalid())
 				  {
-					  cout << "invalid\n";
 					  stop = true;
 					  posTemp.setValid();
 					  break;
@@ -228,55 +204,10 @@ class Queen : public Piece
 					  legalMoves += boardLetters[i][j];
 				  legalMoves += '\n';
 			  }
-			 cout << "while";
 		  }
 
-		 /* for (int i = 0; i < 7; i++)
-			  possibleMoveArray[0][i] = this->getPos() += {0, i + 1};//RIGHT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[1][i] = this->getPos() += {i + 1, i + 1};//UP and RIGHT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[2][i] = this->getPos() += {i + 1, 0}; //UP
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[3][i] = this->getPos() += {i + 1, -i - 1}; //UP and LEFT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[4][i] = this->getPos() += {0, -i - 1}; // LEFT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[5][i] = this->getPos() += {-i - 1, -i - 1};//DOWN and LEFT
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[6][i] = this->getPos() += {-i - 1, 0}; //DOWN
-		  for (int i = 0; i < 7; i++)
-			  possibleMoveArray[7][i] = this->getPos() += {-i - 1, i + 1}; //DOWN and RIGHT
-
-			  */
-
-		/*  for (int i = 0; i < 8; i++)
-		  {
-			  for (int j = 0; j < 7; j++)
-				  cout << possibleMoveArray[i][j] << " isValid: " << possibleMoveArray[i][j].isValid() << endl;
-			  cout << endl;
-		  }
-		  */
-		  cout << "table" << endl;
-		  cout << "0,0" << boardLetters[0][0] << endl;
-		  cout << "   abcdefgh\n";
-		  for (int i = 7; i >= 0; i--)
-		  {
-			  cout << " " << i + 1 << " ";
-			  for (int j = 0; j < 8; j++)
-			  {
-				  
-				  cout << boardLetters[i][j];
-			  }
-				  cout << endl;
-
-
-				  
-
-
-
-		  }
-	  }
+	}
+	  
 };
 
 class Pawn : public Piece
@@ -398,35 +329,68 @@ public:
 
 class Knight : public Piece
 {
-   public:
-      Knight(const bool isWhite, int row, int col) : Piece(isWhite, row,col)
-      { };
-	  Position possibleMoveArray[8][1];
-      virtual int getScore() const    { return getIsWhite() ? 3: -3;}
-      virtual char getLetter() const  { return getIsWhite() ? 'n' : 'N';}
-	  void setValidMoveList()
-	  {
-		  possibleMoveArray[0][0] = this->getPos() += {1, 2}; //up one, right 2
-		  possibleMoveArray[1][0] = this->getPos() += {2, 1}; //up two, right 1
-		  possibleMoveArray[2][0] = this->getPos() += {1, -2}; //up one, left 2
-		  possibleMoveArray[3][0] = this->getPos() += {2, -1}; //up two, left 1
-		  possibleMoveArray[4][0] = this->getPos() += {-1, 2}; //down one, right 2
-		  possibleMoveArray[5][0] = this->getPos() += {-2, 1}; //down two, right 1
-		  possibleMoveArray[6][0] = this->getPos() += {-1, -2}; //down one, left 2
-		  possibleMoveArray[7][0] = this->getPos() += {-2, -1}; //down two, left 1
+public:
+	Knight(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
+	{ };
+	Position possibleMoveArray[8][1];
+	virtual int getScore() const    { return getIsWhite() ? 3 : -3; }
+	virtual char getLetter() const  { return getIsWhite() ? 'n' : 'N'; }
+	void setValidMoveList()
+	{
+		bool stop;
+		int moveDirection[8][2] =
+		{
+			{ 1,2 }, //up 1 right 2
+			{ 2,1 },//up 2 right 1
+			{ 1,-2 },//up 1 left 2
+			{ 2,-1 },//up 2 left 1
+			{ -1, 2 }, //down 1 right 2
+			{ -2, 1 }, //down 2 right 1
+			{ -1, -2}, //down 1 left 2
+			{ -2, -1 }, //down 2 left 1
+		};
+		int pieceRow = this->position.getRow();
+		int pieceCol = this->position.getCol();
+		Position posTemp;
+		int f = 0;
+		for (int inc = 0; inc < 8; inc++)
+		{
+			stop = false;
+			int i = pieceRow;
+			int j = pieceCol;
 
-		  cout << this->getPos();
-		  for (int i = 0; i < 7; i++)
-		  {
-			  cout << possibleMoveArray[i][0] << " isValid: " << possibleMoveArray[i][0].isValid() << endl;
-		  }
-	  }
-   
+			i += moveDirection[inc][0];
+			j += moveDirection[inc][1];
+			posTemp.setRow(i);
+			posTemp.setCol(j);
+			if (posTemp.isValid())
+			{
+				if (boardLetters[i][j] != ' ')
+				{
+					if (!(!isupper(boardLetters[i][j]) && this->getIsWhite() ||
+						isupper(boardLetters[i][j]) && !this->getIsWhite()))
+					{
+						legalMoves += this->position.getPosString();
+						legalMoves += posTemp.getPosString();
+						legalMoves += boardLetters[i][j];
+						legalMoves += '\n';
+					}
+				}
+				else
+				{
+					legalMoves += this->position.getPosString();
+					legalMoves += posTemp.getPosString();
+					legalMoves += '\n';
+				}
+			}
+			posTemp.setValid();
+		}
+	}
 };
+		 
 
 class Bishop : public Piece
 {
-	cout << "";
    public:
      Bishop(const bool isWhite, int row, int col) : Piece(isWhite, row, col)
       { };
