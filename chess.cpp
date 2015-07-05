@@ -20,8 +20,8 @@
 using namespace std;
 
 Chess::Chess() : playerPrompt(WHITEPLAYER) { setQuitGame(false); }
-Chess::Chess(const Chess& orig) { }
-Chess::~Chess() { }
+Chess::Chess(const Chess & orig) { }
+Chess::~Chess() {}
 
 Board board;
 char boardLetter[8][8];
@@ -45,14 +45,14 @@ void Chess::setBoardLetter(Position pos1)
 void Chess::getUserInput()
 {
 
-   cout << getPrompt() << " ";
+   cout << getPlayerPrompt() << " ";
    cin >> userInput;
   
 }
 
 void Chess::pickMenuOption()
 {
-   string x = userInput;
+   string x = userInput;  //make variable shorter
    
    if ( x == "quit" || x == "Quit" || x == "QUIT")
       menuOption = QUIT;
@@ -66,10 +66,13 @@ void Chess::pickMenuOption()
       menuOption = TEST;
    else if (x == "rank" || x == "Rank" || x == "RANK")
       menuOption = RANK;
-   else
+   else if(x.size() >= 4)
    {
+      cout << "xxx";
       menuOption = MOVE;
    }
+   else
+      menuOption = UNKNOWN;
 }
 
 
@@ -84,7 +87,7 @@ void Chess::processInput()
          this->displayMenu();
          break;
       case TEST:
-		 this->boardFlip();
+         this->boardFlip();
          break;  
 	  case READ:
 		  this->readGame();
@@ -187,53 +190,11 @@ void Chess::makeMove()
       
            if(checkValidMove(board[move1.getSrc()].getPos(),move1))
            {
-             
-             
-		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
-		board[move1.getSrc()].setPos(move1.getDes());
-		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
-		writeMoves(move1);
-                //board[move1.getSrc()].setMoved();
-                this->setPrompt();
-                
-               cout << board;
-             
-    
 
            }
            else
-              cout << "Not a valid Move!";
 	}
 	else
-		cout << "Wait your turn!\n";
-         }
-         catch (string sError)
-         {
-                    
-                     cout << sError << endl;
-         }
-}
-
-bool Chess::checkValidMove(Position pos, Move move)
-{
-
-   string temp = move.getText() + "\n";
-   setBoardLetter(pos);
-   board[pos].legalMoves = "";
-   board[pos].setValidMoveList();
-
-   if (board[pos].legalMoves.find(temp) != std::string::npos) 
-   {
-
-      return true;
-   }
-   else
-   {
-
-      return false;
-   }
-
-  
 }
 
 void Chess::writeMoves(Move move)
@@ -264,6 +225,7 @@ void Chess::setPrompt()
 
 }
 
+
 ostream & operator << (ostream & out,  Chess & rhs) 
 {
    rhs.getUserInput();
@@ -289,6 +251,16 @@ int main()
 	   
 	   cout << game;
    }
+   
 
+   
    return 0;
 }
+              //how do we check for other piece
+               writeMoves(move1);
+               board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
+               board[move1.getSrc()].setPos(move1.getDes());
+               board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
+               this->setPrompt();
+                                      
+		cout << board;

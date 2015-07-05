@@ -160,10 +160,7 @@ void Board::makeMove(const Position & pos, Piece & piece)
 /**************************************************************
  * Display (Private)
  * Determines which value to display based on isTest
- *    INPUT: N/A
- *    OUTPUT N/A
- * 
- * Written by Jeffry Simpson
+
  *************************************************************/
 void Board::display() const
 {
