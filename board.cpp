@@ -1,9 +1,16 @@
-/* 
- * File:   board.cpp
- * Author: Jeffry Simpson
- * 
- * Created on June 27, 2015, 7:46 PM
- */
+/***********************************************************************
+* Program:
+*    Project 3, Chess            
+*    Brother McCracken, CS165
+* Author:
+*    Jeffry Simpson, Samuel Koontz
+* Summary: 
+*    The driver program for the game of skeet
+*
+*    Estimated:  0.0 hrs   
+*    Actual:     0.0 hrs
+*      Please describe briefly what was the most difficult part.
+************************************************************************/
 
 #include "board.h"
 
@@ -47,8 +54,8 @@ void Board::setup()
    // the pawns
    for (int col = 0; col < 8; col++)
    {
-      board[1][col] = new Pawn  (true, 6, col  /*white*/);
-      board[6][col] = new Pawn  (false, 1, col /*black*/);      
+      board[1][col] = new Pawn  (true, 1, col  /*white*/);
+      board[6][col] = new Pawn  (false, 6, col /*black*/);      
    }
 
    // the spaces
@@ -78,7 +85,7 @@ void Board::setup()
  *************************************************************/
 void Board::displayText() const
 {
-   
+
    cout << "   abcdefgh\n";
    // display the board
    for (int row = 7; row >= 0; row--)

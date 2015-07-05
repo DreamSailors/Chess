@@ -100,5 +100,11 @@ istream & operator >> (istream & in,  Position & rhs) throw ( string )
    return in;   
 }
 
-
+string Position::getPosString()
+{
+	string posString;
+	posString.insert(0, 1, (this->getCol() + 'a'));
+	posString.insert(1, 1, (this->getRow() + '1'));
+	return posString;
+}
 

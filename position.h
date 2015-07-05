@@ -77,6 +77,7 @@ class Position
       void setInvalid()         { invalid = true;       }
       bool isInvalid() const    { return invalid;       }
       bool isValid() const      { return !invalid;      }
+	  string getPosString();
       bool operator == (const Position & rhs) const;
       bool operator != (const Position & rhs) const;
       const Position & operator =  (const Position & rhs);

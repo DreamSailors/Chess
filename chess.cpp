@@ -14,6 +14,8 @@
 
 
 #include "chess.h"
+#include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -22,9 +24,24 @@ Chess::Chess(const Chess& orig) { }
 Chess::~Chess() { }
 
 Board board;
+char boardLetter[8][8];
 Move move1;
 Space emptyPiece(true, 0, 0);  //Create an empty Space piece to put in Dest
+string MoveList;
+string allMoves;
 
+void Chess::setBoardLetter(Position pos1)
+{
+
+	for (int i = 7; i >= 0; i--)
+		for (int j = 0; j < 8; j++)
+		{
+			Position posTemp;
+			posTemp.set(i, j);
+			board[pos1].setBoardLetters(i, j, board[posTemp].getLetter());
+			//boardLetter[i][j] = board[posTemp].getLetter();
+		}
+}
 void Chess::getUserInput()
 {
 
@@ -61,8 +78,8 @@ void Chess::processInput()
    switch(menuOption)
    {
       case QUIT:
-		  this->leaveGame();
-		  break;
+         this->leaveGame();      
+         break;
       case QUESTION:
          this->displayMenu();
          break;
@@ -70,6 +87,7 @@ void Chess::processInput()
 		 this->boardFlip();
          break;  
 	  case READ:
+		  this->readGame();
 		  break;
 	  case HELP:
 		  this->displayHelp();
@@ -80,11 +98,21 @@ void Chess::processInput()
          //cout << "invalid entry, please try again\n";
    }
 }
-
 void Chess::leaveGame()
 {
-	cout << "save?"; //save file stuff goes here
-	setQuitGame(true);
+   char fileName[256];
+   char line[25];  
+  
+   cin.getline( line, 25, '\n' );
+   cout << "To save a game, please specify the filename.\n";
+   cout << "    To quit without saving a file, just press <enter>\n";
+
+   cin.getline( fileName, 256);
+  
+   ofstream out(fileName);
+   out << allMoves;
+   out.close();
+   setQuitGame(true);
 }
 
 
@@ -108,41 +136,113 @@ void Chess::boardFlip() //changes board to and from test mode
 
 void Chess::readGame()
 {
-	;
+	Move readMove;
+	string temp;
+	string tempMove;
+	char fileName[256];
+	cout << "Filename: ";
+	cin >> fileName;
+
+	ifstream fin(fileName);
+	if (fin.fail())
+	{
+		cout << "Unable to open file";
+		return;
+	}
+	while (fin>>temp)
+	{
+		readMove = temp;
+		board.makeMove(readMove.getDes(), board[readMove.getSrc()]);  //put pieces from source into destination 
+		board[readMove.getSrc()].setPos(readMove.getDes());
+		board.makeMove(readMove.getSrc(), emptyPiece); // put empty piece where the moving piece came
+	}
+	cout << board;
 }
 void Chess::displayHelp()
 {
 	Position pos;
 	cout << "Which piece would you like to find the moves for?";
 	cin >> pos;
+	setBoardLetter(pos);
+	board[pos].legalMoves = "";
 	board[pos].setValidMoveList();
-        board[pos].getValidMoveList();
-//	if (board[pos].getValidMoveList()[0] == '\0')
-//		cout << "No Valid Moves\n";
-//	else
-//		cout << board[pos].getValidMoveList();
+	cout << "Possible moves are:\n" << board[pos].legalMoves;
+
 }
+
 
 void Chess::makeMove()
 {
-	move1 = userInput;
+    try
+      {
+         Position pos;
+ 
+         move1 = userInput;
+            
 	this->checkSameColor(); //check that the move piece matches the turn
 	if (getIsSameColor())
 	{
-           board[move1.getSrc()].setValidMoveList();
-           if(board[move1.getSrc()].validateMove(move1.getDes()))
+           //board[move1.getSrc()].legalMoves = "";
+          //    board[move1.getSrc()].setValidMoveList();
+      
+           if(checkValidMove(board[move1.getSrc()].getPos(),move1))
            {
+             
+             
 		board.makeMove(move1.getDes(), board[move1.getSrc()]);  //put pieces from source into destination 
 		board[move1.getSrc()].setPos(move1.getDes());
 		board.makeMove(move1.getSrc(), emptyPiece); // put empty piece where the moving piece came
-		this->setPrompt();
-		cout << board;
+		writeMoves(move1);
+                //board[move1.getSrc()].setMoved();
+                this->setPrompt();
+                
+               cout << board;
+             
+    
+
            }
            else
-              cout << "mistake";
+              cout << "Not a valid Move!";
 	}
 	else
 		cout << "Wait your turn!\n";
+         }
+         catch (string sError)
+         {
+                    
+                     cout << sError << endl;
+         }
+}
+
+bool Chess::checkValidMove(Position pos, Move move)
+{
+
+   string temp = move.getText() + "\n";
+   setBoardLetter(pos);
+   board[pos].legalMoves = "";
+   board[pos].setValidMoveList();
+
+   if (board[pos].legalMoves.find(temp) != std::string::npos) 
+   {
+
+      return true;
+   }
+   else
+   {
+
+      return false;
+   }
+
+  
+}
+
+void Chess::writeMoves(Move move)
+{
+   allMoves += move.getText();
+   if(playerPrompt == WHITEPLAYER)
+      allMoves += " ";
+   else
+      allMoves += "\n";
 }
 
 void Chess::checkSameColor()
@@ -153,15 +253,15 @@ void Chess::checkSameColor()
 	else
 		setIsSameColor(false);
 }
-void Chess::setPrompt() 
+
+void Chess::setPrompt()
 {
-        
-   if(playerPrompt == WHITEPLAYER)
-      playerPrompt = BLACKPLAYER;
-   else
-      playerPrompt = WHITEPLAYER;
-   
- 
+
+	if (playerPrompt == WHITEPLAYER)
+		playerPrompt = BLACKPLAYER;
+	else
+		playerPrompt = WHITEPLAYER;
+
 }
 
 ostream & operator << (ostream & out,  Chess & rhs) 

@@ -1,9 +1,17 @@
-/* 
- * File:   board.h
- * Author: Jeffry Simpson
- *
- * Created on June 27, 2015, 7:46 PM
- */
+/***********************************************************************
+* Program:
+*    Project 3, Chess            
+*    Brother McCracken, CS165
+* Author:
+*    Jeffry Simpson, Samuel Koontz
+* Summary: 
+*    The driver program for the game of skeet
+*
+*    Estimated:  0.0 hrs   
+*    Actual:     0.0 hrs
+*      Please describe briefly what was the most difficult part.
+************************************************************************/
+
 
 #ifndef BOARD_H
 #define	BOARD_H
@@ -21,12 +29,9 @@ public:
     bool getTest() const { return isTest; }
     Piece & operator [] (const Position & pos)
     {return *board[pos.getRow()][pos.getCol()];};
-
-    
     friend ostream & operator << (ostream & out, const Board & rhs);
     
 private:
-    
     bool isTest;
     bool isAllocated;
     Piece * board[8][8];
@@ -34,8 +39,6 @@ private:
     void display() const;
     void displayText() const;
     void displayFancy() const;
-    
-
 };
 
 #endif	/* BOARD_H */
