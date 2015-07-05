@@ -19,7 +19,6 @@
 #include <cstdlib>
 #include <iostream>    // for CIN and COUT
 #include <string>
-#include <fstream>
 #include "position.h"
 #include "piece.h"
 #include "move.h"
@@ -40,7 +39,6 @@ enum MenuOpt {
    TEST,
    MOVE,
    RANK,
-   UNKNOWN
 };
 
 
@@ -54,7 +52,7 @@ public:
     Chess();
     Chess(const Chess & orig);
     virtual ~Chess();
-    string allMoves;
+    
     
     friend ostream & operator << (ostream & out, Chess & rhs);
     
@@ -90,7 +88,6 @@ private:
     void    leaveGame();
     void    readGame();
     void    makeMove();
-    void    writeMoves(Move move);
     void    checkSameColor();
     void    setBoardLetter(Position pos1);
     void    setQuitGame(bool quit)          { quitGame = quit; }

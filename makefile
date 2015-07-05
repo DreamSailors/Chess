@@ -28,7 +28,7 @@
 
  chess : piece.o position.o move.o board.o chess.o
 	g++ -o chess piece.o position.o move.o board.o chess.o
-
+	tar -cf project3.tar *.cpp *.h makefile
 
 
 ###############################################################
@@ -68,7 +68,7 @@ moveTest.o : movetest.cpp
 # General rules
 ###############################################################
 clean :
-	rm a.out *.o *.tar
+	rm chess *.o *.tar
 
 all :  chess
 
